@@ -44,6 +44,7 @@ class Character extends MovableObject {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                this.moveRight();
+               this.otherDirection = false;
                this.walking_sound.play();
 
             }
@@ -54,7 +55,7 @@ class Character extends MovableObject {
 
             }
             
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
+            if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()  ) {
                this.jump();
             }
             
