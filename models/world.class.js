@@ -27,6 +27,7 @@ class World {
                 if(this.character.isColliding(enemy)){
                     //console.log('Collision with Charakter', this.character.isDead)
                      this.character.hit();
+                     this.statusbar.setPercentage(this.character.energy)
                     
                 }
             });
@@ -37,9 +38,15 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
+
+        this.ctx.translate(-this.camera_x, 0); //back
+
+        //----------------------------- Spave for Fixed Objects--------------
         this.addToMap(this.statusbar);
+        this.ctx.translate(this.camera_x, 0); 
+
+
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
