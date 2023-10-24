@@ -21,6 +21,13 @@ y = 50;
         this.x = 700
         this.animate();
     }
+
+    offset = {
+        top: 0,
+        left: 0,
+        right:0,
+        bottom: 10,
+    }
     animate(){
         
         setInterval(() => {

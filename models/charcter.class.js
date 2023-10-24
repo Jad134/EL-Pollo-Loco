@@ -43,6 +43,13 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/walking.mp3');
 
 
+    offset = {
+        top: 10,
+        left: 10,
+        right:10,
+        bottom: 10,
+    }
+
 
     constructor() {
         super().loadImage('../img/2_character_pepe/2_walk/W-21.png');
