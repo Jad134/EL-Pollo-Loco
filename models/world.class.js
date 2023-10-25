@@ -8,7 +8,9 @@ class World {
     camera_x = 0;
     statusbar = new StatusBar();
     coinbar = new Coinbar();
+    bottlebar = new Bottlebar();
     coins = 0;
+    bottles = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,6 +39,10 @@ class World {
         setInterval(() => {
             this.checkCoinCollision();
         }, 20);
+
+        setInterval(() => {
+            this.checkBottleCollision();
+        }, 20);
     }
 
     checkCoinCollision() {
@@ -53,6 +59,18 @@ class World {
         });
     }
 
+    checkBottleCollision(){
+        this.level.bottles.forEach((b) => {
+            this.level.bottles.forEach((bottle, index) => {
+                if (this.character.isColliding(bottle)) {
+                    this.bottles += 1;
+                    this.level.bottles.splice(index, 1);
+                    this.bottlebar.setPercentageBottle(this.bottles);
+                }
+            });
+        });
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
@@ -64,12 +82,14 @@ class World {
         //----------------------------- Space for Fixed Objects--------------
         this.addToMap(this.statusbar);
         this.addToMap(this.coinbar);
+        this.addToMap(this.bottlebar);
         this.ctx.translate(this.camera_x, 0);
 
 
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles)
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
