@@ -9,6 +9,7 @@ class World {
     statusbar = new StatusBar();
     coinbar = new Coinbar();
     bottlebar = new Bottlebar();
+    throwableObject = [];
     coins = 0;
     bottles = 0;
 
@@ -18,31 +19,45 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    checkCollisions() {
+    run() {
+
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    //console.log('Collision with Charakter', this.character.isDead)
-                    this.character.hit();
-                    this.statusbar.setPercentage(this.character.energy)
-                }
-            });
+            this.checkThrowObjects();
         }, 200);
 
         setInterval(() => {
-            this.checkCoinCollision();
-        }, 20);
+            this.checkEnemyCollision();
+        }, 300);
 
         setInterval(() => {
             this.checkBottleCollision();
+            this.checkCoinCollision();
         }, 20);
+
+    }
+   
+    checkThrowObjects(){
+        if(this.keyboard.D){
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
+            this.throwableObject.push(bottle)
+        }
+    }
+
+    checkEnemyCollision() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                //console.log('Collision with Charakter', this.character.isDead)
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy)
+            }
+        });
     }
 
     checkCoinCollision() {
@@ -59,7 +74,7 @@ class World {
         });
     }
 
-    checkBottleCollision(){
+    checkBottleCollision() {
         this.level.bottles.forEach((b) => {
             this.level.bottles.forEach((bottle, index) => {
                 if (this.character.isColliding(bottle)) {
@@ -89,7 +104,8 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles)
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.throwableObject);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);

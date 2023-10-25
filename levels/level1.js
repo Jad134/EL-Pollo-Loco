@@ -47,12 +47,13 @@ const level1 = new Level(
         new Coin,
     ],
     [
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
+        new CollectBottles(),
+        new CollectBottles(),
+        new CollectBottles(),
+        new CollectBottles(),
+        new CollectBottles(),
+        new CollectBottles(),
+
     ]
     
 

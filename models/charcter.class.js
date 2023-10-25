@@ -2,6 +2,8 @@ class Character extends MovableObject {
     height = 280;
     y = 80;
     speed = 10;
+    throwObjects = new ThrowableObject();
+
     IMAGES_WALKING = [
         '../img/2_character_pepe/2_walk/W-21.png',
         '../img/2_character_pepe/2_walk/W-22.png',
@@ -83,6 +85,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
+            
 
 
 
