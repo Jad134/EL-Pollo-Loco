@@ -11,7 +11,8 @@ class World {
     bottlebar = new Bottlebar();
     throwableObject = [];
     coins = 0;
-    
+    throw_sound = new Audio('audio/throwBottle.mp3')
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -42,14 +43,15 @@ class World {
         }, 20);
 
     }
-   
-    checkThrowObjects(){
-        if(this.keyboard.D && this.bottlebar.percentage > 0){
+
+    checkThrowObjects() {
+        if (this.keyboard.D && this.bottlebar.percentage > 0) {
+            this.throw_sound.play()
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
             this.throwableObject.push(bottle)
             this.bottlebar.percentage -= 1;
             this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
-            }
+        }
     }
 
     checkEnemyCollision() {
