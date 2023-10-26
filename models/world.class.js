@@ -11,7 +11,7 @@ class World {
     bottlebar = new Bottlebar();
     throwableObject = [];
     coins = 0;
-    bottles = 0;
+    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -44,10 +44,12 @@ class World {
     }
    
     checkThrowObjects(){
-        if(this.keyboard.D){
+        if(this.keyboard.D && this.bottlebar.percentage > 0){
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
             this.throwableObject.push(bottle)
-        }
+            this.bottlebar.percentage -= 1;
+            this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
+            }
     }
 
     checkEnemyCollision() {
@@ -78,9 +80,9 @@ class World {
         this.level.bottles.forEach((b) => {
             this.level.bottles.forEach((bottle, index) => {
                 if (this.character.isColliding(bottle)) {
-                    this.bottles += 1;
+                    this.bottlebar.percentage += 1;
                     this.level.bottles.splice(index, 1);
-                    this.bottlebar.setPercentageBottle(this.bottles);
+                    this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
                 }
             });
         });
