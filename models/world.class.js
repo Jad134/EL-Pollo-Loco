@@ -9,8 +9,10 @@ class World {
     statusbar = new StatusBar();
     coinbar = new Coinbar();
     bottlebar = new Bottlebar();
+    endbossbar = new Endbossbar();
     throwableObject = [];
     coins = 0;
+    characterReachedBoss = false;
     throw_sound = new Audio('audio/throwBottle.mp3')
 
 
@@ -40,8 +42,15 @@ class World {
         setInterval(() => {
             this.checkBottleCollision();
             this.checkCoinCollision();
+            this.checkCharacterReachedBoss();
         }, 20);
 
+    }
+
+    checkCharacterReachedBoss(){
+        if (this.character.x == 5000){
+            this.characterReachedBoss = true;
+        }
     }
 
     checkThrowObjects() {
@@ -102,6 +111,9 @@ class World {
         this.addToMap(this.statusbar);
         this.addToMap(this.coinbar);
         this.addToMap(this.bottlebar);
+        if ( this.characterReachedBoss) {
+            this.addToMap(this.endbossbar)  
+        }
         this.ctx.translate(this.camera_x, 0);
 
 

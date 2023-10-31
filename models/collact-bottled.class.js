@@ -2,7 +2,7 @@ class CollectBottles extends MovableObject{
     height = 100;
     width = 100;
     min = 200;
-    max = 2500;
+    max = 4500;
 
 
     IMAGES_BOTTLED = [
