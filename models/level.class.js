@@ -14,4 +14,8 @@ class Level {
         this.coins = coins;
         this.bottles = bottles;
     }
+
+    getEndboss(){
+        return this.enemies.find(e => e instanceof Endboss);
+    }
 }

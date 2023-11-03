@@ -3,14 +3,16 @@ class Character extends MovableObject {
     y = 80;
     speed = 10;
     throwObjects = new ThrowableObject();
+    endboss = new Endboss();
+    drawableObjects = new DrawableObject();
 
     IMAGES_WALKING = [
-        '../img/2_character_pepe/2_walk/W-21.png',
-        '../img/2_character_pepe/2_walk/W-22.png',
-        '../img/2_character_pepe/2_walk/W-23.png',
-        '../img/2_character_pepe/2_walk/W-24.png',
-        '../img/2_character_pepe/2_walk/W-25.png',
-        '../img/2_character_pepe/2_walk/W-26.png'
+        'img/2_character_pepe/2_walk/W-21.png',
+        'img/2_character_pepe/2_walk/W-22.png',
+        'img/2_character_pepe/2_walk/W-23.png',
+        'img/2_character_pepe/2_walk/W-24.png',
+        'img/2_character_pepe/2_walk/W-25.png',
+        'img/2_character_pepe/2_walk/W-26.png'
     ];
 
     IMAGES_JUMPING = [
@@ -48,7 +50,7 @@ class Character extends MovableObject {
     offset = {
         top: 120,
         left: 30,
-        right:40,
+        right: 40,
         bottom: 30,
     }
 
@@ -64,7 +66,7 @@ class Character extends MovableObject {
     }
 
 
-
+    
     animate() {
 
         setInterval(() => {
@@ -85,21 +87,17 @@ class Character extends MovableObject {
             if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
-            
-
-
-
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
 
-           
-                if (this.isDead()) {
-                    this.playAnimation(this.IMAGES_DEAD);
-                } else 
-                if(this.isHurt()){
+
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else
+                if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);
                 } else
                     if (this.isAboveGround()) {
@@ -114,5 +112,7 @@ class Character extends MovableObject {
         }, 50);
 
 
+
     }
+
 }

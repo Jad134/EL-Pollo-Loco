@@ -1,10 +1,15 @@
-class Endboss extends MovableObject{
-height = 400;
-width = 300;
-y = 50;
+class Endboss extends MovableObject {
+    drawableObject = new DrawableObject();
+    height = 400;
+    width = 300;
+    y = 50;
+    reachedBoss = false;
+    intervalIds = [];
 
 
-   IMAGES_WALKING = [
+
+
+    IMAGES_STAY = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
         'img/4_enemie_boss_chicken/2_alert/G7.png',
@@ -12,26 +17,70 @@ y = 50;
         'img/4_enemie_boss_chicken/2_alert/G9.png',
         'img/4_enemie_boss_chicken/2_alert/G10.png',
         'img/4_enemie_boss_chicken/2_alert/G11.png',
-        'img/4_enemie_boss_chicken/2_alert/G12.png',  
+        'img/4_enemie_boss_chicken/2_alert/G12.png',
     ]
 
-    constructor(){
-        super().loadImage(this.IMAGES_WALKING[0]);
+
+    IMAGES_WALKING = [
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png',
+    ]
+
+
+    constructor() {
+        super()
+        this.loadImage(this.IMAGES_STAY[0]);
+        this.loadImages(this.IMAGES_STAY);
         this.loadImages(this.IMAGES_WALKING);
         this.x = 5300
+        this.speed = 0.5;
         this.animate();
+        this.walkLeftIfChracterIsClose();
+
     }
 
     offset = {
         top: 0,
         left: 0,
-        right:0,
+        right: 0,
         bottom: 10,
     }
-    animate(){
-        
+
+
+
+    walkLeftIfChracterIsClose() {
         setInterval(() => {
-            this. playAnimation(this.IMAGES_WALKING)
+            if (this.reachedBoss) {
+                this.moveLeft();
+            }
+        }, 1000 / 60);
+
+        setInterval(() => {
+            if (this.reachedBoss) {
+                this.playAnimation(this.IMAGES_WALKING)
+            }
+        }, 350);
+
+        setInterval(() => {
+            if (!this.reachedBoss) {
+                this.playAnimation(this.IMAGES_STAY)
+            }
         }, 500);
+
+
     }
+
+
+    CharacterReachedBoss() {
+        this.reachedBoss = true;
+        console.log(this.reachedBoss)
+    }
+
+    animate() {
+
+
+    }
+
 }

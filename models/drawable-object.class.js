@@ -1,4 +1,4 @@
-class DrawableObject{
+class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
@@ -6,7 +6,8 @@ class DrawableObject{
     y = 280;
     height = 150;
     width = 100;
-
+    
+    
 
     loadImage(path) {
         this.img = new Image(); // this.img = document.getelementById('Image')

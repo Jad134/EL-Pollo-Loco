@@ -1,8 +1,11 @@
 class Endbossbar extends DrawableObject{
 IMAGES_ENDBOSSBAR = [
-    'img/7_statusbars/2_statusbar_endboss/blue.png',
-    'img/7_statusbars/2_statusbar_endboss/green.png',
-    'img/7_statusbars/2_statusbar_endboss/orange.png',
+    'img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png',
+    'img/7_statusbars/1_statusbar/2_statusbar_health/orange/20.png',
+    'img/7_statusbars/1_statusbar/2_statusbar_health/orange/40.png',
+    'img/7_statusbars/1_statusbar/2_statusbar_health/orange/60.png',
+    'img/7_statusbars/1_statusbar/2_statusbar_health/orange/80.png',
+    'img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png',
 ]
 
 
@@ -14,7 +17,7 @@ constructor() {
     this.width = 200;
     this.x = 500;
     this.y = 0;
-    this.setPercentageBottle(0);
+    this.setPercentageBottle(100);
     
 }
 
@@ -27,15 +30,22 @@ setPercentageBottle(percentage) {
 }
 
 resolveImageIndex() {
-    if (this.percentage == 0) {
-        return 0;
-    } else if (this.percentage == 1) {
-        return 1;
-    } else if (this.percentage == 2) {
+    if (this.percentage == 100) {
+        return 5;
+    } else if (this.percentage > 80) {
+        return 4;
+    } else if (this.percentage > 60) {
+        return 3;
+    }
+    else if (this.percentage > 40) {
         return 2;
     }
-    
-
+    else if (this.percentage > 20) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 }

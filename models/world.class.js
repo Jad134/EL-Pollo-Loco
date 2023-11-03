@@ -1,5 +1,4 @@
 class World {
-
     character = new Character();
     level = level1;
     canvas;
@@ -10,6 +9,7 @@ class World {
     coinbar = new Coinbar();
     bottlebar = new Bottlebar();
     endbossbar = new Endbossbar();
+    endbossbarLogo = new EndbossbarLogo();
     throwableObject = [];
     coins = 0;
     characterReachedBoss = false;
@@ -23,10 +23,12 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        
     }
 
     setWorld() {
         this.character.world = this;
+        //this.endboss.world = this;
     }
 
     run() {
@@ -37,19 +39,22 @@ class World {
 
         setInterval(() => {
             this.checkEnemyCollision();
+            this.checkCharacterReachedBoss();
         }, 300);
 
         setInterval(() => {
             this.checkBottleCollision();
             this.checkCoinCollision();
-            this.checkCharacterReachedBoss();
         }, 20);
 
     }
 
-    checkCharacterReachedBoss(){
-        if (this.character.x == 5000){
+    
+
+    checkCharacterReachedBoss() {
+        if (this.character.x > 4999) {
             this.characterReachedBoss = true;
+            this.level.getEndboss().CharacterReachedBoss();
         }
     }
 
@@ -111,8 +116,9 @@ class World {
         this.addToMap(this.statusbar);
         this.addToMap(this.coinbar);
         this.addToMap(this.bottlebar);
-        if ( this.characterReachedBoss) {
-            this.addToMap(this.endbossbar)  
+        if (this.characterReachedBoss) {
+            this.addToMap(this.endbossbar)
+            this.addToMap(this.endbossbarLogo)
         }
         this.ctx.translate(this.camera_x, 0);
 
