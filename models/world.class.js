@@ -23,7 +23,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        
+
     }
 
     setWorld() {
@@ -45,11 +45,12 @@ class World {
         setInterval(() => {
             this.checkBottleCollision();
             this.checkCoinCollision();
+            this.checkBottleHitEnemy();
         }, 20);
 
     }
 
-    
+
 
     checkCharacterReachedBoss() {
         if (this.character.x > 4999) {
@@ -100,9 +101,21 @@ class World {
                     this.level.bottles.splice(index, 1);
                     this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
                 }
+
             });
         });
     }
+
+    checkBottleHitEnemy() {
+        this.throwableObject.forEach((bottle, index) => {
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy)) {
+                    this.throwableObject.splice(index, 1)
+                    console.log(' hit')
+                }
+            })
+        })
+    };
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)

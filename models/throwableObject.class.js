@@ -29,6 +29,12 @@ class ThrowableObject extends MovableObject {
     smashBottle_sound = new Audio('audio/bottle_smash.mp3')
 
 
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 10,
+    }
 
     throw() {
         this.speedY = 30;
