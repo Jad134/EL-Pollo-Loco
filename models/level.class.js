@@ -1,5 +1,6 @@
 class Level {
     enemies;
+    endboss;
     clouds;
     backgroundObjects;
     coins;
@@ -7,8 +8,9 @@ class Level {
     level_end_x = 5800;
 
 
-    constructor(enemies, clouds, backgroundObjects, coins, bottles ) {
+    constructor(enemies, enboss, clouds, backgroundObjects, coins, bottles ) {
         this.enemies = enemies;
+        this.endboss = enboss;
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
         this.coins = coins;
@@ -16,6 +18,6 @@ class Level {
     }
 
     getEndboss(){
-        return this.enemies.find(e => e instanceof Endboss);
+        return this.endboss.find(e => e instanceof Endboss);
     }
 }

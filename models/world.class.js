@@ -46,6 +46,7 @@ class World {
             this.checkBottleCollision();
             this.checkCoinCollision();
             this.checkBottleHitEnemy();
+            this.checkBottleHitEndboss();
         }, 20);
 
     }
@@ -108,14 +109,32 @@ class World {
 
     checkBottleHitEnemy() {
         this.throwableObject.forEach((bottle, index) => {
-            this.level.enemies.forEach((enemy) => {
+            this.level.enemies.forEach((enemy, index) => {
                 if (bottle.isColliding(enemy)) {
+                    enemy.speed = 0;
+                    enemy.hit();
                     this.throwableObject.splice(index, 1)
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1)
+                    }, 700);
                     console.log(' hit')
+                    
                 }
             })
         })
     };
+
+    checkBottleHitEndboss() {
+        this.throwableObject.forEach((bottle, index) => {
+            this.level.endboss.forEach((endboss) => {
+                if (bottle.isColliding(endboss)) {
+                    this.throwableObject.splice(index, 1)
+                    console.log(' hit Endboss')
+                }
+            })
+        })
+    }
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -140,6 +159,7 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.throwableObject);
         this.addToMap(this.character);
 
