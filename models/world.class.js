@@ -89,7 +89,7 @@ class World {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
                 //console.log('Collision with Charakter', this.character.isDead)
-                this.character.hitEnemy();
+                this.character.hit();
                 this.statusbar.setPercentage(this.character.energy)
             }
         });
