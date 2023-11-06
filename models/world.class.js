@@ -39,6 +39,7 @@ class World {
 
         setInterval(() => {
             this.checkEnemyCollision();
+            this.checkEndbossCollision();
             this.checkCharacterReachedBoss();
         }, 300);
 
@@ -73,6 +74,16 @@ class World {
     checkEnemyCollision() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
+                //console.log('Collision with Charakter', this.character.isDead)
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy)
+            }
+        });
+    }
+
+    checkEndbossCollision() {
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss)) {
                 //console.log('Collision with Charakter', this.character.isDead)
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.energy)
