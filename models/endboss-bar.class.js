@@ -17,20 +17,20 @@ constructor() {
     this.width = 200;
     this.x = 500;
     this.y = 0;
-    this.setPercentageBottle(100);
+    this.setPercentage(100);
     
 }
 
 percentage = 0;
 
-setPercentageBottle(percentage) {
+setPercentage(percentage) {
     this.percentage = percentage;
     let path = this.IMAGES_ENDBOSSBAR[this.resolveImageIndex()];
     this.img = this.imageCache[path];
 }
 
 resolveImageIndex() {
-    if (this.percentage == 100) {
+    if (this.percentage >= 100) {
         return 5;
     } else if (this.percentage > 80) {
         return 4;
@@ -40,7 +40,7 @@ resolveImageIndex() {
     else if (this.percentage > 40) {
         return 2;
     }
-    else if (this.percentage > 20) {
+    else if (this.percentage >= 20) {
         return 1;
     }
     else {

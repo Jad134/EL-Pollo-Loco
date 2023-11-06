@@ -3,6 +3,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 300;
     y = 50;
+    energy = 140;
     reachedBoss = false;
     intervalIds = [];
 
@@ -77,6 +78,8 @@ class Endboss extends MovableObject {
         this.reachedBoss = true;
         console.log(this.reachedBoss)
     }
+
+   
 
     animate() {
 

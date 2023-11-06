@@ -41,7 +41,7 @@ class World {
             this.checkEnemyCollision();
             this.checkEndbossCollision();
             this.checkCharacterReachedBoss();
-        }, 300);
+        }, 50);
 
         setInterval(() => {
             this.checkBottleCollision();
@@ -72,11 +72,15 @@ class World {
     }
 
     checkEnemyCollision() {
-        this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
-                //console.log('Collision with Charakter', this.character.isDead)
-                this.character.hit();
-                this.statusbar.setPercentage(this.character.energy)
+                if (this.character.isAboveGround()) {
+                    this.killChicken(enemy, index);
+                    this.character.jump();
+                } else {
+                    this.character.hit();
+                    this.statusbar.setPercentage(this.character.energy)
+                }
             }
         });
     }
@@ -85,7 +89,7 @@ class World {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
                 //console.log('Collision with Charakter', this.character.isDead)
-                this.character.hit();
+                this.character.hitEnemy();
                 this.statusbar.setPercentage(this.character.energy)
             }
         });
@@ -95,10 +99,10 @@ class World {
         this.level.coins.forEach((coin) => {
             this.level.coins.forEach((coin, index) => {
                 if (this.character.isColliding(coin)) {
-                    // Entfernen Sie den kollidierten Coin aus der Liste
+                    // Entfernen den kollidierten Coin aus der Liste
                     this.coins += 1;
                     this.level.coins.splice(index, 1);
-                    // Aktualisieren Sie die Münzanzeige in der StatusBar und geben Sie die Anzahl der Coins mit
+                    // Aktualisiert die Münzanzeige in der StatusBar und gibt die Anzahl der Coins mit
                     this.coinbar.setPercentageCoin(this.coins);
                 }
             });
@@ -119,17 +123,13 @@ class World {
     }
 
     checkBottleHitEnemy() {
-        this.throwableObject.forEach((bottle, index) => {
+        this.throwableObject.forEach((bottle, tindex) => {
             this.level.enemies.forEach((enemy, index) => {
                 if (bottle.isColliding(enemy)) {
-                    enemy.speed = 0;
-                    enemy.hit();
-                    this.throwableObject.splice(index, 1)
-                    setTimeout(() => {
-                        this.level.enemies.splice(index, 1)
-                    }, 700);
+                    this.killChicken(enemy, index);
+                    this.throwableObject.splice(tindex, 1)
                     console.log(' hit')
-                    
+
                 }
             })
         })
@@ -140,12 +140,22 @@ class World {
             this.level.endboss.forEach((endboss) => {
                 if (bottle.isColliding(endboss)) {
                     this.throwableObject.splice(index, 1)
-                    console.log(' hit Endboss')
+                    endboss.hitEnemy();
+                    this.endbossbar.setPercentage(endboss.energy)
+                    console.log(endboss.energy)
                 }
             })
         })
     }
 
+    killChicken(enemy, index) {
+        setTimeout(() => {
+            this.level.enemies.splice(index, 1)
+        }, 800);
+        enemy.speed = 0;
+        enemy.hitEnemy();
+       
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)

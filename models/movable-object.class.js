@@ -40,8 +40,17 @@ class MovableObject extends DrawableObject{
         this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
+    hitEnemy() {
+        this.energy -= 20;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
     hit() {
-        this.energy -= 10;
+        this.energy -= 0.5;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
