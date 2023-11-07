@@ -5,6 +5,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    bottle = new ThrowableObject();
     statusbar = new StatusBar();
     coinbar = new Coinbar();
     bottlebar = new Bottlebar();
@@ -14,6 +15,7 @@ class World {
     coins = 0;
     characterReachedBoss = false;
     throw_sound = new Audio('audio/throwBottle.mp3')
+
 
 
     constructor(canvas, keyboard) {
@@ -28,13 +30,13 @@ class World {
 
     setWorld() {
         this.character.world = this;
-        //this.endboss.world = this;
     }
 
     run() {
 
         setInterval(() => {
             this.checkThrowObjects();
+            this.checkBottleHitEndboss();
         }, 200);
 
         setInterval(() => {
@@ -47,11 +49,10 @@ class World {
             this.checkBottleCollision();
             this.checkCoinCollision();
             this.checkBottleHitEnemy();
-            this.checkBottleHitEndboss();
+           
         }, 20);
 
     }
-
 
 
     checkCharacterReachedBoss() {
@@ -69,6 +70,7 @@ class World {
             this.bottlebar.percentage -= 1;
             this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
         }
+
     }
 
     checkEnemyCollision() {
@@ -126,9 +128,9 @@ class World {
         this.throwableObject.forEach((bottle, tindex) => {
             this.level.enemies.forEach((enemy, index) => {
                 if (bottle.isColliding(enemy)) {
+                   // this.bottle.bottleHit = true;
                     this.killChicken(enemy, index);
                     this.throwableObject.splice(tindex, 1)
-                    console.log(' hit')
 
                 }
             })
@@ -138,11 +140,15 @@ class World {
     checkBottleHitEndboss() {
         this.throwableObject.forEach((bottle, index) => {
             this.level.endboss.forEach((endboss) => {
-                if (bottle.isColliding(endboss)) {
-                    this.throwableObject.splice(index, 1)
+                if (!bottle.bottleHit &&  bottle.isColliding(endboss)) {
+                    bottle.bottleHit = true;
+                    // this.bottle.smashBottle();
                     endboss.hitEnemy();
                     this.endbossbar.setPercentage(endboss.energy)
                     console.log(endboss.energy)
+                    setTimeout(() => {
+                       // this.throwableObject.splice(index, 1)
+                    }, 300);
                 }
             })
         })
@@ -154,7 +160,7 @@ class World {
         }, 800);
         enemy.speed = 0;
         enemy.hitEnemy();
-       
+
     }
 
     draw() {

@@ -1,4 +1,6 @@
 class ThrowableObject extends MovableObject {
+    bottleHit = false;
+
     IMAGES_BOTTLEROTATION = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -24,6 +26,7 @@ class ThrowableObject extends MovableObject {
         this.height = 60;
         this.width = 80;
         this.throw();
+
     }
 
     smashBottle_sound = new Audio('audio/bottle_smash.mp3')
@@ -39,30 +42,47 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 30;
         this.applyGravity();
-        setInterval(() => {
-            this.x += 10;
+        let moveInterval = setInterval(() => {
+            if (!this.bottleHit){
+                this.x += 10;
+                if(this.y > 350){
+                    this.bottleHit = true;
+                }
+            }
+            else {
+                clearInterval(this.applyGravityInterval);
+                setTimeout(() => { // hide bottle from canvas
+                    this.x = 0;
+                    this.y = -340;
+                }, 350);
+                clearInterval(moveInterval);
+            }
+
         }, 25);
         this.animate()
 
     }
 
-    animate() {
+    // this.y > 320
 
+    animate() {
         setInterval(() => {
-            
-            if (this.y > 320) {
-                this.smashBottle_sound.play();
-                this.playAnimation(this.IMAGES_BOTTLESPLASH)
-                this.speedY = 0;
-                this.acceleration = 0; 
-                setTimeout(() => {
-                    this.x = 0;
-                    this.y = -340;
-                }, 50);   
-            } else{
-                this.playAnimation(this.IMAGES_BOTTLEROTATION)
+            if (this.bottleHit) {
+                this.smashBottle();
+            } else {
+                this.playAnimation(this.IMAGES_BOTTLEROTATION);
             }
         }, 80);
+    }
+
+    smashBottle() {
+        this.playAnimation(this.IMAGES_BOTTLESPLASH)
+        this.smashBottle_sound.play();
+        this.speedY = 0;
+        this.acceleration = 0;
+        setTimeout(() => {
+            this.bottleHit = false;
+        }, 500);
     }
 
 }
