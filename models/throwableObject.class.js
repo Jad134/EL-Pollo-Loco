@@ -43,9 +43,9 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();
         let moveInterval = setInterval(() => {
-            if (!this.bottleHit){
+            if (!this.bottleHit) {
                 this.x += 10;
-                if(this.y > 350){
+                if (this.y > 350) {
                     this.bottleHit = true;
                 }
             }

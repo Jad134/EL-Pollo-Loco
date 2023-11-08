@@ -11,6 +11,7 @@ class World {
     bottlebar = new Bottlebar();
     endbossbar = new Endbossbar();
     endbossbarLogo = new EndbossbarLogo();
+    levelEndRock = new Rock();
     throwableObject = [];
     coins = 0;
     characterReachedBoss = false;
@@ -37,6 +38,7 @@ class World {
         setInterval(() => {
             this.checkThrowObjects();
             this.checkBottleHitEndboss();
+            
         }, 200);
 
         setInterval(() => {
@@ -49,11 +51,21 @@ class World {
             this.checkBottleCollision();
             this.checkCoinCollision();
             this.checkBottleHitEnemy();
+            this.checkCharacterPosition();
            
         }, 20);
 
     }
 
+
+checkCharacterPosition(){
+    let endboss = this.level.getEndboss()
+    if(this.character.x > endboss.x){
+        endboss.CharacterIsBehind = true
+    } else{
+        endboss.CharacterIsBehind = false;
+    }
+}
 
     checkCharacterReachedBoss() {
         if (this.character.x > 4999) {
@@ -127,10 +139,9 @@ class World {
     checkBottleHitEnemy() {
         this.throwableObject.forEach((bottle, tindex) => {
             this.level.enemies.forEach((enemy, index) => {
-                if (bottle.isColliding(enemy)) {
-                   // this.bottle.bottleHit = true;
+                if (!bottle.bottleHit && bottle.isColliding(enemy)) {
+                   bottle.bottleHit = true;
                     this.killChicken(enemy, index);
-                    this.throwableObject.splice(tindex, 1)
 
                 }
             })
@@ -142,13 +153,9 @@ class World {
             this.level.endboss.forEach((endboss) => {
                 if (!bottle.bottleHit &&  bottle.isColliding(endboss)) {
                     bottle.bottleHit = true;
-                    // this.bottle.smashBottle();
                     endboss.hitEnemy();
                     this.endbossbar.setPercentage(endboss.energy)
                     console.log(endboss.energy)
-                    setTimeout(() => {
-                       // this.throwableObject.splice(index, 1)
-                    }, 300);
                 }
             })
         })
@@ -188,6 +195,7 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.throwableObject);
+        this.addToMap(this.levelEndRock)
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);

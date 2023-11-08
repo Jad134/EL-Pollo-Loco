@@ -5,6 +5,7 @@ class Endboss extends MovableObject {
     y = 50;
     energy = 140;
     reachedBoss = false;
+    CharacterIsBehind = false;
     intervalIds = [];
 
 
@@ -47,7 +48,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 3300
+        this.x = 5300
         //this.walkLeftIfChracterIsClose();
         this.animate();
 
@@ -56,7 +57,7 @@ class Endboss extends MovableObject {
     offset = {
         top: 30,
         left: 20,
-        right: 0, 
+        right: 0,
         bottom: 20
     }
 
@@ -105,12 +106,25 @@ class Endboss extends MovableObject {
             this.y += 100;
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT)
-        } else if (this.reachedBoss) {
+            
+        }else if (this.CharacterIsBehind) {
             this.speed = 20;
             this.playAnimation(this.IMAGES_WALKING)
+            this.otherDirection = true;
+            this.moveRight();
+            console.log('yes')
+        } else if (this.reachedBoss && !this.CharacterIsBehind) {
+            this.speed = 20;
+            this.playAnimation(this.IMAGES_WALKING)
+            this.otherDirection = false;
             this.moveLeft();
-        } else if(!this.reachedBoss){
+        } 
+        else if (!this.reachedBoss) {
             this.playAnimation(this.IMAGES_STAY)
         }
+    }
+
+    endbossMoveRight() {
+
     }
 }
