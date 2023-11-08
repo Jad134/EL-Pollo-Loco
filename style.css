@@ -13,6 +13,7 @@ body {
     margin: 0;
     justify-content: center;
     background-image: url('./img/downloads/desert.png');
+    background-size: cover;
     font-family: 'zabars', Arial, Helvetica, sans-serif;
 
 }

@@ -1,5 +1,7 @@
 class ThrowableObject extends MovableObject {
     bottleHit = false;
+    walkLeft = false;
+    direction;
 
     IMAGES_BOTTLEROTATION = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -17,7 +19,7 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
 
-    constructor(x, y) {
+    constructor(x, y, direction) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_BOTTLEROTATION)
         this.loadImages(this.IMAGES_BOTTLESPLASH)
@@ -26,7 +28,7 @@ class ThrowableObject extends MovableObject {
         this.height = 60;
         this.width = 80;
         this.throw();
-
+        this.direction = direction
     }
 
     smashBottle_sound = new Audio('audio/bottle_smash.mp3')
@@ -43,20 +45,25 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();
         let moveInterval = setInterval(() => {
-            if (!this.bottleHit) {
-                this.x += 10;
-                if (this.y > 350) {
-                    this.bottleHit = true;
+
+            if (this.direction) {
+                this.x -= 10;
+            } else
+                if (!this.bottleHit && !this.walkLeft) {
+                    this.x += 10;
+
+                    if (this.y > 350) {
+                        this.bottleHit = true;
+                    }
+                } else {
+                    clearInterval(this.applyGravityInterval);
+                    setTimeout(() => { // hide bottle from canvas
+                        this.x = 0;
+                        this.y = -340;
+                    }, 350);
+                    clearInterval(moveInterval);
                 }
-            }
-            else {
-                clearInterval(this.applyGravityInterval);
-                setTimeout(() => { // hide bottle from canvas
-                    this.x = 0;
-                    this.y = -340;
-                }, 350);
-                clearInterval(moveInterval);
-            }
+            //console.log(this.walkLeft)
 
         }, 25);
         this.animate()
