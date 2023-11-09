@@ -77,8 +77,14 @@ checkCharacterPosition(){
     checkThrowObjects() {
         if (this.keyboard.D && this.bottlebar.percentage > 0) {
             this.throw_sound.play()
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection)
-            this.throwableObject.push(bottle)
+            if(!this.character.otherDirection){
+                let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 100, this.character.otherDirection)
+                this.throwableObject.push(bottle)
+            }else if(this.character.otherDirection){
+                let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 100, this.character.otherDirection)
+                this.throwableObject.push(bottle)
+            }
+            
             this.bottlebar.percentage -= 1;
             this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
         }

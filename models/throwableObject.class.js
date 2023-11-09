@@ -48,7 +48,6 @@ class ThrowableObject extends MovableObject {
 
             if (!this.bottleHit && this.direction) {
                 this.x -= 10;
-
                 if (this.y > 350) {
                     this.bottleHit = true;
                 }
