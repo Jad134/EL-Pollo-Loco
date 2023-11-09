@@ -5,6 +5,7 @@ class Character extends MovableObject {
     throwObjects = new ThrowableObject();
     endboss = new Endboss();
     drawableObjects = new DrawableObject();
+    cameraSmoothness = 0.1;
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -79,17 +80,22 @@ class Character extends MovableObject {
                     this.moveLeft();
                     this.otherDirection = true;
                     this.walking_sound.play();
-                }
 
+                }
+           let targetCameraPosition = -this.x + 500;
             if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
+            if (this.world.keyboard.RIGHT) {
+                this.world.camera_x += ( -this.x + 100 - this.world.camera_x) * this.cameraSmoothness;
+            } else if (this.world.keyboard.LEFT) {
+                this.world.camera_x += (targetCameraPosition - this.world.camera_x) * this.cameraSmoothness;
 
-            this.world.camera_x = -this.x + 100;
+            }
         }, 1000 / 60);
 
 
-      
+
         setInterval(() => {
 
 
@@ -114,8 +120,8 @@ class Character extends MovableObject {
 
     }
 
-    
-        
-    
+
+
+
 
 }
