@@ -6,6 +6,7 @@ class Endboss extends MovableObject {
     energy = 140;
     reachedBoss = false;
     CharacterIsBehind = false;
+    CharacterIsClose = false;
     intervalIds = [];
 
 
@@ -40,6 +41,17 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ]
 
+    IMAGES_ATTACK = [
+        'img/4_enemie_boss_chicken/3_attack/G13.png',
+        'img/4_enemie_boss_chicken/3_attack/G14.png',
+        'img/4_enemie_boss_chicken/3_attack/G15.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png',
+    ]
+
 
     constructor() {
         super()
@@ -48,6 +60,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_ATTACK);
         this.x = 5300
         //this.walkLeftIfChracterIsClose();
         this.animate();
@@ -106,8 +119,12 @@ class Endboss extends MovableObject {
             this.y += 100;
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT)
-            
-        }else if (this.CharacterIsBehind) {
+
+        } else if (this.CharacterIsClose) {
+            this.speed = 30;
+            this.playAnimation(this.IMAGES_ATTACK)
+            this.moveLeft();
+        } else if (this.CharacterIsBehind) {
             this.speed = 20;
             this.playAnimation(this.IMAGES_WALKING)
             this.otherDirection = true;
@@ -118,13 +135,11 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_WALKING)
             this.otherDirection = false;
             this.moveLeft();
-        } 
+        }
         else if (!this.reachedBoss) {
             this.playAnimation(this.IMAGES_STAY)
         }
     }
 
-    endbossMoveRight() {
 
-    }
 }

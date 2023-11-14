@@ -38,7 +38,7 @@ class World {
         setInterval(() => {
             this.checkThrowObjects();
             this.checkBottleHitEndboss();
-            
+
         }, 200);
 
         setInterval(() => {
@@ -52,20 +52,26 @@ class World {
             this.checkCoinCollision();
             this.checkBottleHitEnemy();
             this.checkCharacterPosition();
-           
+
         }, 20);
 
     }
 
 
-checkCharacterPosition(){
-    let endboss = this.level.getEndboss()
-    if(this.character.x > endboss.x){
-        endboss.CharacterIsBehind = true
-    } else{
-        endboss.CharacterIsBehind = false;
+    checkCharacterPosition() {
+        let endboss = this.level.getEndboss()
+        if (this.character.x > endboss.x) {
+            endboss.CharacterIsBehind = true
+        } else {
+            endboss.CharacterIsBehind = false;
+        }
+
+        if (Math.abs(this.character.x - endboss.x) < 200) {
+            endboss.CharacterIsClose = true;
+        }else{
+            endboss.CharacterIsClose = false;
+        }
     }
-}
 
     checkCharacterReachedBoss() {
         if (this.character.x > 4999) {
@@ -77,14 +83,14 @@ checkCharacterPosition(){
     checkThrowObjects() {
         if (this.keyboard.D && this.bottlebar.percentage > 0) {
             this.throw_sound.play()
-            if(!this.character.otherDirection){
+            if (!this.character.otherDirection) {
                 let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 100, this.character.otherDirection)
                 this.throwableObject.push(bottle)
-            }else if(this.character.otherDirection){
+            } else if (this.character.otherDirection) {
                 let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 100, this.character.otherDirection)
                 this.throwableObject.push(bottle)
             }
-            
+
             this.bottlebar.percentage -= 1;
             this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
         }
@@ -146,7 +152,7 @@ checkCharacterPosition(){
         this.throwableObject.forEach((bottle, tindex) => {
             this.level.enemies.forEach((enemy, index) => {
                 if (!bottle.bottleHit && bottle.isColliding(enemy)) {
-                   bottle.bottleHit = true;
+                    bottle.bottleHit = true;
                     this.killChicken(enemy, index);
 
                 }
@@ -157,7 +163,7 @@ checkCharacterPosition(){
     checkBottleHitEndboss() {
         this.throwableObject.forEach((bottle, index) => {
             this.level.endboss.forEach((endboss) => {
-                if (!bottle.bottleHit &&  bottle.isColliding(endboss)) {
+                if (!bottle.bottleHit && bottle.isColliding(endboss)) {
                     bottle.bottleHit = true;
                     endboss.hitEnemy();
                     this.endbossbar.setPercentage(endboss.energy)
