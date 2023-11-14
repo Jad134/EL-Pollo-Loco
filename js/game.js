@@ -3,6 +3,7 @@ let world;
 let keyboard = new Keyboard();
 main_song = new Audio('audio/main-song.mp3')
 main_song.volume = 0.1;
+let isMuted = false;
 
 function init() {
     startLevel()
@@ -22,16 +23,22 @@ function startGame() {
 
 
 function playSong() {
-    main_song.play();  
+    main_song.play();
 }
 
 
-function muteSong(){
-    if(main_song.volume == 0){
-        main_song.volume = 0.1;
-    }else if(main_song.volume == 0.1){
+function toggleVolume() {
+    let volumeImage = document.getElementById('volume');
+
+    isMuted = !isMuted;
+    if (isMuted) {
+        volumeImage.src = 'img/downloads/volume-off.png';
         main_song.volume = 0;
+    }else {
+        volumeImage.src = 'img/downloads/volume-on.png';
+        main_song.volume = 0.1;
     }
+
 }
 
 
