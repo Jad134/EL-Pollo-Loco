@@ -69,9 +69,11 @@ canvas {
     top: 10px;
     right: 10px;
     position: absolute;
+    
 }
 
 .settings img{
     width: 32px;
     height: 32px;
+    cursor: pointer;
 }
