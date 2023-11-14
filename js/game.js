@@ -3,12 +3,18 @@ let world;
 let keyboard = new Keyboard();
 
 function init() {
+    startLevel()
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     
     console.log('Charcter is', world.character, world.enemies);
 }
 
+
+function startGame(){
+    document.getElementById('start-screen').style = 'display:none;'
+    
+}
 
 window.addEventListener('keydown', (e) => {
    // console.log(event['key'])

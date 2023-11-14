@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/status-bar.class.js"></script>
     <script src="./models/coin-bar.class.js"></script>
@@ -28,14 +29,28 @@
     <script src="./models/level.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
-    
+
 </head>
-<body onload="init()">
+
+<body onload="">
     <h1>El pollo loco</h1>
 
-
-<canvas id="canvas" width="720" height="480">
-
-</canvas>
+    <div class="game-container">
+        <div id="start-screen">
+            <div class="upper-menu">
+                <div class="settings">
+                    <img src="./img/downloads/fullscreen-icon.png" alt="">
+                    <img src="./img/downloads/volume-on.png" alt="">
+                    <img src="./img/downloads/gamepad-icon.png" alt="">
+                </div>
+                <div onclick="startGame(), init()" id="start-btn">
+                    <span>Start Game</span>
+                </div>
+            </div>
+        </div>
+        <canvas id="canvas" width="720" height="480">
+    </div>
+    </canvas>
 </body>
+
 </html>
