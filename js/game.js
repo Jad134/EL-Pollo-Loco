@@ -19,13 +19,15 @@ async function startGame() {
     await init();
 }
 
-async function removeStartScreen(){
+
+async function removeStartScreen() {
     setTimeout(() => {
         document.getElementById('start-screen').style.backgroundImage = 'none'
-    document.getElementById('start-btn').style = 'display: none;'
+        document.getElementById('start-btn').style = 'display: none;'
     }, 200);
-    
+
 }
+
 
 function playSong() {
     main_song.play();

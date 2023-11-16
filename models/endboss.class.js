@@ -117,6 +117,10 @@ class Endboss extends MovableObject {
             this.speed = 0;
             this.playAnimation(this.IMAGES_DEAD)
             this.y += 100;
+            setTimeout(() => {
+               let gameOverScreen = document.getElementById('game-over-title')
+               gameOverScreen.style = 'display: flex;';
+            }, 300);
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT)
 

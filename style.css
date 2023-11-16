@@ -77,3 +77,12 @@ canvas {
     height: 32px;
     cursor: pointer;
 }
+
+#game-over-title{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/9_intro_outro_screens/game_over/game over!.png');
+    background-size: 100% 100%;
+}
