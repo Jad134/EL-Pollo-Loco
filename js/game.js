@@ -5,22 +5,27 @@ main_song = new Audio('audio/main-song.mp3')
 main_song.volume = 0.1;
 let isMuted = false;
 
-function init() {
-    startLevel()
+async function init() {
+    await startLevel();
+    await removeStartScreen();
+    playSong();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-    playSong()
-
     console.log('Charcter is', world.character, world.enemies);
 }
 
 
-function startGame() {
-    document.getElementById('start-screen').style.backgroundImage = 'none'
-    document.getElementById('start-btn').style = 'display: none;'
-
+async function startGame() {
+    await init();
 }
 
+async function removeStartScreen(){
+    setTimeout(() => {
+        document.getElementById('start-screen').style.backgroundImage = 'none'
+    document.getElementById('start-btn').style = 'display: none;'
+    }, 200);
+    
+}
 
 function playSong() {
     main_song.play();
@@ -34,7 +39,7 @@ function toggleVolume() {
     if (isMuted) {
         volumeImage.src = 'img/downloads/volume-off.png';
         main_song.volume = 0;
-    }else {
+    } else {
         volumeImage.src = 'img/downloads/volume-on.png';
         main_song.volume = 0.1;
     }

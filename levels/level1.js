@@ -1,6 +1,6 @@
 let level1;
 
-    function startLevel(){
+   async function startLevel(){
         
         level1 = new Level([
             new Chicken(),

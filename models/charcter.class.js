@@ -45,6 +45,19 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png',
     ]
 
+    IMAGES_IDLE = [
+        'img/2_character_pepe/1_idle/idle/I-1.png',
+        'img/2_character_pepe/1_idle/idle/I-2.png',
+        'img/2_character_pepe/1_idle/idle/I-3.png',
+        'img/2_character_pepe/1_idle/idle/I-4.png',
+        'img/2_character_pepe/1_idle/idle/I-5.png',
+        'img/2_character_pepe/1_idle/idle/I-6.png',
+        'img/2_character_pepe/1_idle/idle/I-7.png',
+        'img/2_character_pepe/1_idle/idle/I-8.png',
+        'img/2_character_pepe/1_idle/idle/I-9.png',
+        'img/2_character_pepe/1_idle/idle/I-10.png',
+    ]
+
     world;
     walking_sound = new Audio('audio/walking.mp3');
     hurt_sound = new Audio('audio/hurt.mp3')
@@ -64,6 +77,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_IDLE);
         this.applyGravity();
         this.animate();
         this.resetSound();
@@ -109,6 +123,7 @@ class Character extends MovableObject {
 
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                this.y += 10
             } else
                 if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);
@@ -121,12 +136,14 @@ class Character extends MovableObject {
                         this.playAnimation(this.IMAGES_JUMPING);
                     } else {
 
+                        this.playAnimation(this.IMAGES_IDLE);
+
                         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                             //Walk Animation
                             this.playAnimation(this.IMAGES_WALKING);
                         }
                     }
-        }, 50);
+        }, 150);
 
 
 

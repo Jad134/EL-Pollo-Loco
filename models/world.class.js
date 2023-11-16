@@ -42,13 +42,12 @@ class World {
         }, 200);
 
         setInterval(() => {
-            this.checkEnemyCollision();
             this.checkEndbossCollision();
             this.checkCharacterReachedBoss();
         }, 50);
 
         setInterval(() => {
-            
+            this.checkEnemyCollision();
             this.checkCoinCollision();
             this.checkBottleHitEnemy();
             this.checkCharacterPosition();
