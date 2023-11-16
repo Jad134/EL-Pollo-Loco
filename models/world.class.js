@@ -38,7 +38,7 @@ class World {
         setInterval(() => {
             this.checkThrowObjects();
             this.checkBottleHitEndboss();
-
+            this.checkBottleCollision();
         }, 200);
 
         setInterval(() => {
@@ -48,7 +48,7 @@ class World {
         }, 50);
 
         setInterval(() => {
-            this.checkBottleCollision();
+            
             this.checkCoinCollision();
             this.checkBottleHitEnemy();
             this.checkCharacterPosition();
@@ -103,7 +103,7 @@ class World {
                 if (this.character.isAboveGround()) {
                     this.killChicken(enemy, index);
                     this.character.jump();
-                } else {
+                } else if(enemy.speed > 0) {
                     this.character.hit();
                     this.statusbar.setPercentage(this.character.energy)
                 }
@@ -174,12 +174,11 @@ class World {
     }
 
     killChicken(enemy, index) {
-        setTimeout(() => {
-            this.level.enemies.splice(index, 1)
-        }, 800);
         enemy.speed = 0;
         enemy.hitEnemy();
-
+        //setTimeout(() => {
+         //   this.level.enemies.splice(index, 1)
+        //}, 800);
     }
 
     draw() {

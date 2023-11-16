@@ -39,6 +39,9 @@ class SmallChicken extends MovableObject{
         setInterval(() => {
             if (this.isDead()) {
                 this.loadImage(this.IMAGES_DEAD)
+                setTimeout(() => {
+                    this.y += 10
+                }, 1000);
             } else {
                 this.playAnimation(this.IMAGES_WALKING)
             }
