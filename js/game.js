@@ -5,6 +5,7 @@ main_song = new Audio('audio/main-song.mp3')
 main_song.volume = 0.1;
 let isMuted = false;
 
+
 async function init() {
     await startLevel();
     await removeStartScreen();

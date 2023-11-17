@@ -18,7 +18,7 @@ body {
 
 }
 
-h1{
+h1 {
     font-size: 64px;
     letter-spacing: 4px;
     text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.5);
@@ -28,7 +28,7 @@ canvas {
     background-color: black;
 }
 
-.game-container{
+.game-container {
     position: relative;
     display: flex;
     justify-content: center;
@@ -36,14 +36,15 @@ canvas {
     border: 3px solid white;
 }
 
-#start-screen{
+#start-screen {
     position: absolute;
     width: 100%;
     height: 100%;
     background-image: url(img/9_intro_outro_screens/start/startscreen_2.png);
     background-size: 100% 100%;
 }
-.upper-menu{
+
+.upper-menu {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,7 +52,7 @@ canvas {
 }
 
 
-#start-btn{
+#start-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,26 +64,59 @@ canvas {
     cursor: pointer;
 }
 
-.settings{
+.settings {
     gap: 8px;
     display: flex;
     top: 10px;
     right: 10px;
     position: absolute;
-    
+
 }
 
-.settings img{
+.settings img {
     width: 32px;
     height: 32px;
     cursor: pointer;
+    z-index: 2;
 }
 
-#game-over-title{
-    display: none;
+#game-over-title {
+    z-index: 1;
     position: absolute;
     width: 100%;
     height: 100%;
     background-image: url('img/9_intro_outro_screens/game_over/game over!.png');
     background-size: 100% 100%;
+   visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.63s, opacity 0.63s linear;
+}
+
+#game-over-title.active {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.endscreen-buttons{
+    gap: 24px;
+    height: 80%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.endscreen-buttons button{
+    background-color: rgb(255, 181, 0);
+    border: none;
+    height: 48px;
+    font-size: 32px;
+    font-family: 'zabars';
+    border-radius: 8px;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.blur{
+    filter: blur(10px);
 }
