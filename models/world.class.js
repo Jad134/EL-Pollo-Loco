@@ -67,7 +67,7 @@ class World {
 
         if (Math.abs(this.character.x - endboss.x) < 200) {
             endboss.CharacterIsClose = true;
-        }else{
+        } else {
             endboss.CharacterIsClose = false;
         }
     }
@@ -81,7 +81,9 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && this.bottlebar.percentage > 0) {
-            this.throw_sound.play()
+            if (!isMuted) {
+                this.throw_sound.play()
+            }
             if (!this.character.otherDirection) {
                 let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 100, this.character.otherDirection)
                 this.throwableObject.push(bottle)
@@ -102,7 +104,7 @@ class World {
                 if (this.character.isAboveGround()) {
                     this.killChicken(enemy, index);
                     this.character.jump();
-                } else if(enemy.speed > 0) {
+                } else if (enemy.speed > 0) {
                     this.character.hit();
                     this.statusbar.setPercentage(this.character.energy)
                 }
@@ -176,7 +178,7 @@ class World {
         enemy.speed = 0;
         enemy.hitEnemy();
         //setTimeout(() => {
-         //   this.level.enemies.splice(index, 1)
+        //   this.level.enemies.splice(index, 1)
         //}, 800);
     }
 

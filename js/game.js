@@ -19,13 +19,36 @@ function mainMenu() {
     removeEndScreen()
     document.getElementById('start-screen').style.backgroundImage = 'url(img/9_intro_outro_screens/start/startscreen_2.png)'
     document.getElementById('start-btn').style = 'display: flex;'
+    main_song.pause();
+    main_song.currentTime = 0;
 }
 
 async function startGame() {
     await init();
     removeEndScreen();
+    main_song.currentTime = 0;
+    
 }
 
+function gameIsOverScreen() {
+    let gameOverScreen = document.getElementById('game-over-title')
+    let canvas = document.getElementById('canvas');
+    gameOverScreen.classList.add('active');
+    canvas.classList.add('blur');
+    setTimeout(() => {
+        clearAllIntervals();
+    }, 900);
+}
+
+function gameIsLostScreen() {
+    let gameOverScreen = document.getElementById('game-loose-title')
+    let canvas = document.getElementById('canvas');
+    gameOverScreen.classList.add('active');
+    canvas.classList.add('blur');
+    setTimeout(() => {
+        clearAllIntervals();
+    }, 900);
+}
 
 async function removeStartScreen() {
     setTimeout(() => {
@@ -38,6 +61,8 @@ async function removeStartScreen() {
 function removeEndScreen() {
     let canvas = document.getElementById('canvas');
     let gameOverScreen = document.getElementById('game-over-title');
+    let gameLostScreen = document.getElementById('game-loose-title');
+    gameLostScreen.classList.remove('active')
     gameOverScreen.classList.remove('active');
     canvas.classList.remove('blur');
 }
@@ -54,14 +79,18 @@ function toggleVolume() {
     isMuted = !isMuted;
     if (isMuted) {
         volumeImage.src = 'img/downloads/volume-off.png';
-        main_song.volume = 0;
+        main_song.volume = 0; 
     } else {
         volumeImage.src = 'img/downloads/volume-on.png';
         main_song.volume = 0.1;
+        
     }
 
 }
 
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
 
 window.addEventListener('keydown', (e) => {
     // console.log(event['key'])
@@ -113,4 +142,6 @@ window.addEventListener('keyup', (e) => {
     }
 
 });
+
+
 

@@ -87,7 +87,9 @@ class ThrowableObject extends MovableObject {
 
     smashBottle() {
         this.playAnimation(this.IMAGES_BOTTLESPLASH)
-        this.smashBottle_sound.play();
+        if(!isMuted){
+            this.smashBottle_sound.play();
+        }
         this.speedY = 0;
         this.acceleration = 0;
         setTimeout(() => {

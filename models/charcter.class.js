@@ -83,6 +83,8 @@ class Character extends MovableObject {
         this.resetSound();
     }
 
+
+
     resetSound() {
         setInterval(() => {
             this.hurtSoundPlayed = false;
@@ -96,12 +98,17 @@ class Character extends MovableObject {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                if (!isMuted) {
+                    this.walking_sound.play();
+                }
             } else
                 if (this.world.keyboard.LEFT && this.x > 0) {
                     this.moveLeft();
                     this.otherDirection = true;
-                    this.walking_sound.play();
+                    if (!isMuted) {
+                        this.walking_sound.play();
+                    }
+
 
                 }
             let targetCameraPosition = -this.x + 500;
@@ -124,10 +131,11 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.y += 10
+                gameIsLostScreen()
             } else
                 if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);
-                    if (!this.hurtSoundPlayed) {
+                    if (!this.hurtSoundPlayed && !isMuted) {
                         this.hurt_sound.play();
                         this.hurtSoundPlayed = true;
                     }

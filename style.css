@@ -92,7 +92,25 @@ canvas {
     transition: visibility 0s linear 0.63s, opacity 0.63s linear;
 }
 
+#game-loose-title {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/9_intro_outro_screens/game_over/you lost.png');
+    background-size: 100% 100%;
+   visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.63s, opacity 0.63s linear;
+}
+
 #game-over-title.active {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+#game-loose-title.active{
     visibility: visible;
     opacity: 1;
     transition-delay: 0s;
@@ -116,6 +134,8 @@ canvas {
     letter-spacing: 2px;
     cursor: pointer;
 }
+
+
 
 .blur{
     filter: blur(10px);
