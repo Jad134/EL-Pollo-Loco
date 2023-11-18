@@ -122,6 +122,10 @@ class Endboss extends MovableObject {
                 let canvas = document.getElementById('canvas');
                 gameOverScreen.classList.add('active');
                 canvas.classList.add('blur');
+                setTimeout(() => {
+                    this.clearAllIntervals();
+                }, 800);
+                
             }, 300);
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT)
@@ -147,5 +151,8 @@ class Endboss extends MovableObject {
         }
     }
 
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+      }
 
 }

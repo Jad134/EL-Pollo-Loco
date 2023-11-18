@@ -15,9 +15,15 @@ async function init() {
     console.log('Charcter is', world.character, world.enemies);
 }
 
+function mainMenu() {
+    removeEndScreen()
+    document.getElementById('start-screen').style.backgroundImage = 'url(img/9_intro_outro_screens/start/startscreen_2.png)'
+    document.getElementById('start-btn').style = 'display: flex;'
+}
 
 async function startGame() {
     await init();
+    removeEndScreen();
 }
 
 
@@ -27,6 +33,13 @@ async function removeStartScreen() {
         document.getElementById('start-btn').style = 'display: none;'
     }, 200);
 
+}
+
+function removeEndScreen() {
+    let canvas = document.getElementById('canvas');
+    let gameOverScreen = document.getElementById('game-over-title');
+    gameOverScreen.classList.remove('active');
+    canvas.classList.remove('blur');
 }
 
 
