@@ -8,6 +8,8 @@ class Endboss extends MovableObject {
     CharacterIsBehind = false;
     CharacterIsClose = false;
     intervalIds = [];
+    bigChickenSound = new Audio('audio/chicken-beginn.mp3')
+    bigChickenSoundPlayed = false;
 
 
     IMAGES_STAY = [
@@ -101,7 +103,7 @@ class Endboss extends MovableObject {
 
     CharacterReachedBoss() {
         this.reachedBoss = true;
-        console.log(this.reachedBoss)
+       this.playEndbossSound();
     }
 
     animate() {
@@ -145,6 +147,20 @@ class Endboss extends MovableObject {
         }
     }
 
+    playEndbossSound(){
+        if(!this.bigChickenSoundPlayed && !isMuted){
+            this.bigChickenSound.play()
+            this.bigChickenSoundPlayed = true;
+        }   
+        this.replayEndbossSound();
+    }
    
+
+    replayEndbossSound(){
+        setInterval(() => {          
+            this.playEndbossSound();
+            this.bigChickenSoundPlayed = false;
+        }, 10000);
+    }
 
 }
