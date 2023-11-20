@@ -1,5 +1,5 @@
 class SmallChicken extends MovableObject{
-    y = 380;
+    y = 370;
     height = 50;
     width = 40;
     energy = 5;
@@ -20,7 +20,7 @@ class SmallChicken extends MovableObject{
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
-        this.x = 600 + Math.random() * 900;
+        this.x = 600 + Math.random() * 4900;
         this.loadImages(this.IMAGES_WALKING);
         this.speed = 0.15 + Math.random() * 0.25;
         this.animate();
@@ -57,6 +57,7 @@ class SmallChicken extends MovableObject{
 
     }
 
+    
     playSound(){
         if(!isMuted){
             this.dead_chick_sound.currentTime = 2.9;

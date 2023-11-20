@@ -15,6 +15,13 @@ let level1;
             new Chicken(),
             new Chicken(),
             new SmallChicken(),
+            new SmallChicken(),
+            new SmallChicken(),
+            new SmallChicken(),
+            new SmallChicken(),
+            new Chicken(),
+            new Chicken(),
+
             
         ],
         [
@@ -26,6 +33,13 @@ let level1;
             new Cloud(),
             new Cloud(),
             new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            
         ],
     
         [
@@ -81,6 +95,14 @@ let level1;
             new Coin,
         ],
         [
+            new CollectBottles(),
+            new CollectBottles(),
+            new CollectBottles(),
+            new CollectBottles(),
+            new CollectBottles(),
+            new CollectBottles(),
+            new CollectBottles(),
+            new CollectBottles(),
             new CollectBottles(),
             new CollectBottles(),
             new CollectBottles(),

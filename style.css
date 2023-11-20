@@ -26,6 +26,7 @@ h1 {
 
 canvas {
     background-color: black;
+    display: block;
 }
 
 .game-container {
@@ -136,8 +137,52 @@ canvas {
     cursor: pointer;
 }
 
-
-
 .blur{
     filter: blur(10px);
 }
+
+@media only screen and (max-width: 720px){
+    canvas{
+        width: 100%;
+    }
+    #start-btn{
+        position: absolute;
+        top: 30px;
+    }
+}
+
+@media only screen and (max-height: 480px){
+    canvas{
+        width: 100%;
+    }
+}
+
+@media (max-width: 550px){
+    #start-btn{
+        font-size: 24px;
+        width: 100px;
+        height: 32px;
+    }
+
+    .settings img{
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 340px){
+    h1{
+        font-size: 32px;
+    }
+
+    .endscreen-buttons button{
+        font-size: 24px;
+    }
+}
+
+@media (max-height: 550px){
+    h1{
+        display: none;
+    }
+}
+
