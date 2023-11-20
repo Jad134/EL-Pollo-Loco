@@ -38,7 +38,8 @@
     <div class="game-container">
         <div id="start-screen">
             <div class="upper-menu">
-                <div class="settings">
+                <div id="settings" class="settings">
+                    <img onclick="pauseGame()" id="pause-img" src="./img/downloads/pause.png" alt="">
                     <img src="./img/downloads/fullscreen-icon.png" alt="">
                     <img id="volume" onclick="toggleVolume()" src="./img/downloads/volume-on.png" alt="">
                     <img src="./img/downloads/gamepad-icon.png" alt="">
@@ -58,6 +59,16 @@
             <div class="endscreen-buttons">
                 <button onclick="startGame()">Restart Game</button>
                 <button onclick="mainMenu()">Main Menu</button>
+            </div>
+        </div>
+        <div id="pause-screen">
+            <div class="pause-buttons">
+                <span class="pause-settings">Settings</span>
+                <button onclick="continueGame()">Continue</button>
+                <button onclick="mainMenu()">Main Menu</button>
+                <button onclick="startGame()">Restart Game</button>
+                <button>Key Assignment</button>
+                <button onclick="toggleVolume()">Sound : <span>On</span></button>
             </div>
         </div>
         <canvas id="canvas" width="720" height="480">

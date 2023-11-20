@@ -80,13 +80,13 @@ class Endboss extends MovableObject {
 
     walkLeftIfChracterIsClose() {
         setInterval(() => {
-            if (this.reachedBoss) {
+            if (this.reachedBoss && !gamePaused) {
                 this.moveLeft();
             }
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.reachedBoss) {
+            if (this.reachedBoss && !gamePaused) {
                 this.playAnimation(this.IMAGES_WALKING)
             }
         }, 350);
@@ -126,17 +126,17 @@ class Endboss extends MovableObject {
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT)
 
-        } else if (this.CharacterIsClose) {
+        } else if (this.CharacterIsClose && !gamePaused) {
             this.speed = 30;
             this.playAnimation(this.IMAGES_ATTACK)
             this.moveLeft();
-        } else if (this.CharacterIsBehind) {
+        } else if (this.CharacterIsBehind && !gamePaused) {
             this.speed = 20;
             this.playAnimation(this.IMAGES_WALKING)
             this.otherDirection = true;
             this.moveRight();
             console.log('yes')
-        } else if (this.reachedBoss && !this.CharacterIsBehind) {
+        } else if (this.reachedBoss && !this.CharacterIsBehind && !gamePaused) {
             this.speed = 20;
             this.playAnimation(this.IMAGES_WALKING)
             this.otherDirection = false;
@@ -148,7 +148,7 @@ class Endboss extends MovableObject {
     }
 
     playEndbossSound(){
-        if(!this.bigChickenSoundPlayed && !isMuted){
+        if(!this.bigChickenSoundPlayed && !isMuted && !gamePaused){
             this.bigChickenSound.play()
             this.bigChickenSoundPlayed = true;
         }   

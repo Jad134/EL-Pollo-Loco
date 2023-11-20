@@ -20,4 +20,8 @@ class Level {
     getEndboss(){
         return this.endboss.find(e => e instanceof Endboss);
     }
+
+    getChicken(){
+        return this.enemies.find(e => e instanceof Chicken);
+    }
 }

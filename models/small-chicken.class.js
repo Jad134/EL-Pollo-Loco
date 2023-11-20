@@ -37,7 +37,9 @@ class SmallChicken extends MovableObject{
 
     animate() {
         setInterval(() => {
-            this.moveLeft();
+            if(!gamePaused){
+                this.moveLeft();
+            }      
         }, 1000 / 60);
 
         setInterval(() => {

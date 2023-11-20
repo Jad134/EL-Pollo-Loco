@@ -16,6 +16,9 @@ class World {
     coins = 0;
     characterReachedBoss = false;
     throw_sound = new Audio('audio/throwBottle.mp3')
+    chickenPaused;
+   
+   
 
 
 
@@ -26,11 +29,17 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.getEnemies()
 
     }
 
     setWorld() {
-        this.character.world = this;
+        this.character.world = this; 
+    }
+
+    getEnemies(){
+       this.chickenPaused = this.level.getChicken().chickenPaused;
+       console.log(this.chickenPaused)
     }
 
     run() {
@@ -55,6 +64,8 @@ class World {
         }, 20);
 
     }
+
+    
 
 
     checkCharacterPosition() {

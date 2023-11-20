@@ -7,6 +7,7 @@ class Character extends MovableObject {
     drawableObjects = new DrawableObject();
     cameraSmoothness = 0.1;
     hurtSoundPlayed;
+    walkIntervall;
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -92,38 +93,7 @@ class Character extends MovableObject {
     }
 
     animate() {
-
-        setInterval(() => {
-            this.walking_sound.pause();
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                if (!isMuted) {
-                    this.walking_sound.play();
-                }
-            } else
-                if (this.world.keyboard.LEFT && this.x > 0) {
-                    this.moveLeft();
-                    this.otherDirection = true;
-                    if (!isMuted) {
-                        this.walking_sound.play();
-                    }
-
-
-                }
-            let targetCameraPosition = -this.x + 500;
-            if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-            }
-            if (this.world.keyboard.RIGHT) {
-                this.world.camera_x += (-this.x + 100 - this.world.camera_x) * this.cameraSmoothness;
-            } else if (this.world.keyboard.LEFT) {
-                this.world.camera_x += (targetCameraPosition - this.world.camera_x) * this.cameraSmoothness;
-
-            }
-        }, 1000 / 60);
-
-
+        this.walkIntervallFunction()
 
         setInterval(() => {
 
@@ -157,7 +127,37 @@ class Character extends MovableObject {
 
     }
 
+    walkIntervallFunction() {
+        this.walkIntervall = setInterval(() => {
+            this.walking_sound.pause();
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !gamePaused) {
+                this.moveRight();
+                this.otherDirection = false;
+                if (!isMuted) {
+                    this.walking_sound.play();
+                }
+            } else
+                if (this.world.keyboard.LEFT && this.x > 0 && !gamePaused) {
+                    this.moveLeft();
+                    this.otherDirection = true;
+                    if (!isMuted) {
+                        this.walking_sound.play();
+                    }
 
+
+                }
+            let targetCameraPosition = -this.x + 500;
+            if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
+                this.jump();
+            }
+            if (this.world.keyboard.RIGHT && !gamePaused) {
+                this.world.camera_x += (-this.x + 100 - this.world.camera_x) * this.cameraSmoothness;
+            } else if (this.world.keyboard.LEFT && !gamePaused) {
+                this.world.camera_x += (targetCameraPosition - this.world.camera_x) * this.cameraSmoothness;
+
+            }
+        }, 1000 / 60);
+    }
 
 
 
