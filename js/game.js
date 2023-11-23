@@ -12,6 +12,7 @@ let gamePaused = false;
 async function init() {
     await startLevel();
     await removeStartScreen();
+    touchButtonEvents();
     playSong();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
@@ -24,6 +25,7 @@ function mainMenu() {
     document.getElementById('start-btn').style = 'display: flex;'
     document.getElementById('pause-img').style = 'display: none'
     document.getElementById('settings').style = 'display: flex;'
+    document.getElementById('touch-panels').style = 'z-index: 0;'
     main_song.pause();
     main_song.currentTime = 0;
 }
@@ -40,6 +42,7 @@ async function startGame() {
 function gameIsOverScreen() {
     let gameOverScreen = document.getElementById('game-over-title')
     let canvas = document.getElementById('canvas');
+    document.getElementById('touch-panels').style = 'z-index: 0;'
     gameOverScreen.classList.add('active');
     canvas.classList.add('blur');
     setTimeout(() => {
@@ -50,6 +53,7 @@ function gameIsOverScreen() {
 function gameIsLostScreen() {
     let gameOverScreen = document.getElementById('game-loose-title')
     let canvas = document.getElementById('canvas');
+    document.getElementById('touch-panels').style = 'z-index: 0;'
     gameOverScreen.classList.add('active');
     canvas.classList.add('blur');
     setTimeout(() => {
@@ -62,6 +66,7 @@ async function removeStartScreen() {
         document.getElementById('start-screen').style.backgroundImage = 'none'
         document.getElementById('start-btn').style = 'display: none;'
         document.getElementById('pause-img').style = 'display: block'
+        document.getElementById('touch-panels').style = 'z-index: 99;'
     }, 200);
 
 }
@@ -78,9 +83,7 @@ function removeEndScreen() {
     canvas.classList.remove('blur');
 }
 
-function removePauseScreen(){
-    
-}
+
 
 
 function playSong() {
@@ -109,6 +112,7 @@ function toggleVolume() {
 function pauseGame() {
     let pauseScreen = document.getElementById('pause-screen');
     let settings = document.getElementById('settings');
+    document.getElementById('touch-panels').style = 'z-index: 0;'
     pauseScreen.classList.add('active');
     settings.style = 'display: none;'
     canvas.classList.add('blur');
@@ -116,14 +120,15 @@ function pauseGame() {
     main_song.pause();
 }
 
-function continueGame(){
+function continueGame() {
     let pauseScreen = document.getElementById('pause-screen');
     let settings = document.getElementById('settings');
+    document.getElementById('touch-panels').style = 'z-index: 99;'
     pauseScreen.classList.remove('active');
     settings.style = 'display: flex;'
     canvas.classList.remove('blur');
     main_song.play();
-    gamePaused = false;   
+    gamePaused = false;
 }
 
 
@@ -184,5 +189,52 @@ window.addEventListener('keyup', (e) => {
 
 });
 
+function touchButtonEvents() {
+    let leftTouchBtn = document.getElementById('left-touch-btn');
+    let rightTouchBtn = document.getElementById('right-touch-btn');
+    let jumpTouchBtn = document.getElementById('jump-touch-btn');
+    let throwTouchBtn = document.getElementById('throw-touch-btn');
+
+    leftTouchBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+
+    leftTouchBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+
+    rightTouchBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    })
+
+    rightTouchBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    })
+
+    jumpTouchBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.UP = true;
+    })
+
+    jumpTouchBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.UP = false;
+    })
+
+    throwTouchBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.D = true;
+    })
+
+    throwTouchBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.D = false;
+    })
+
+}
 
 
