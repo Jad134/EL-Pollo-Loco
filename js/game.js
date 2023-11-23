@@ -7,8 +7,6 @@ let isMuted = false;
 let gamePaused = false;
 
 
-
-
 async function init() {
     await startLevel();
     await removeStartScreen();
@@ -44,7 +42,7 @@ function gameIsOverScreen() {
     let canvas = document.getElementById('canvas');
     document.getElementById('touch-panels').style = 'z-index: 0;'
     gameOverScreen.classList.add('active');
-    canvas.classList.add('blur');
+ 
     setTimeout(() => {
         clearAllIntervals();
     }, 900);
@@ -55,7 +53,7 @@ function gameIsLostScreen() {
     let canvas = document.getElementById('canvas');
     document.getElementById('touch-panels').style = 'z-index: 0;'
     gameOverScreen.classList.add('active');
-    canvas.classList.add('blur');
+
     setTimeout(() => {
         clearAllIntervals();
     }, 900);
@@ -80,10 +78,8 @@ function removeEndScreen() {
     gameLostScreen.classList.remove('active');
     gameOverScreen.classList.remove('active');
     pauseScreen.classList.remove('active');
-    canvas.classList.remove('blur');
+
 }
-
-
 
 
 function playSong() {
@@ -104,10 +100,10 @@ function toggleVolume() {
         volumeImage.src = 'img/downloads/volume-on.png';
         main_song.volume = 0.1;
         menuVolume.innerHTML = 'On';
-
     }
 
 }
+
 
 function pauseGame() {
     let pauseScreen = document.getElementById('pause-screen');
@@ -115,10 +111,10 @@ function pauseGame() {
     document.getElementById('touch-panels').style = 'z-index: 0;'
     pauseScreen.classList.add('active');
     settings.style = 'display: none;'
-    canvas.classList.add('blur');
     gamePaused = true;
     main_song.pause();
 }
+
 
 function continueGame() {
     let pauseScreen = document.getElementById('pause-screen');
@@ -126,8 +122,28 @@ function continueGame() {
     document.getElementById('touch-panels').style = 'z-index: 99;'
     pauseScreen.classList.remove('active');
     settings.style = 'display: flex;'
-    canvas.classList.remove('blur');
     main_song.play();
+    gamePaused = false;
+}
+
+
+function showKeyboardAssignments(){
+    let assignmentscreen = document.getElementById('assignment-screen');
+    let settings = document.getElementById('settings');
+    document.getElementById('touch-panels').style = 'z-index: 0;'
+    assignmentscreen.classList.add('active');
+    settings.style = 'display: none;'
+    gamePaused = true;
+    main_song.pause();
+}
+
+
+function closeAssignments(){
+    let assignmentscreen = document.getElementById('assignment-screen');
+    let settings = document.getElementById('settings');
+    document.getElementById('touch-panels').style = 'z-index: 99;'
+    assignmentscreen.classList.remove('active');
+    settings.style = 'display: flex;'
     gamePaused = false;
 }
 
@@ -136,105 +152,5 @@ function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-
-
-window.addEventListener('keydown', (e) => {
-    // console.log(event['key'])
-
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
-    if (e.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-    if (e.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
-    if (e.keyCode == 38) {
-        keyboard.UP = true;
-    }
-
-    if (e.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-    if (e.keyCode == 68) {
-        keyboard.D = true;
-    }
-
-});
-
-window.addEventListener('keyup', (e) => {
-    // console.log(event['key'])
-
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-    if (e.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-    if (e.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-    if (e.keyCode == 38) {
-        keyboard.UP = false;
-    }
-
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-
-    if (e.keyCode == 68) {
-        keyboard.D = false;
-    }
-
-});
-
-function touchButtonEvents() {
-    let leftTouchBtn = document.getElementById('left-touch-btn');
-    let rightTouchBtn = document.getElementById('right-touch-btn');
-    let jumpTouchBtn = document.getElementById('jump-touch-btn');
-    let throwTouchBtn = document.getElementById('throw-touch-btn');
-
-    leftTouchBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.LEFT = true;
-    });
-
-    leftTouchBtn.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.LEFT = false;
-    });
-
-    rightTouchBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.RIGHT = true;
-    })
-
-    rightTouchBtn.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.RIGHT = false;
-    })
-
-    jumpTouchBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.UP = true;
-    })
-
-    jumpTouchBtn.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.UP = false;
-    })
-
-    throwTouchBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.D = true;
-    })
-
-    throwTouchBtn.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.D = false;
-    })
-
-}
 
 

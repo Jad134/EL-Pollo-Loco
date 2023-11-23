@@ -29,6 +29,7 @@
     <script src="./models/level.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
+    <script src="./js/keyboard-touch-settings.js"></script>
 
 </head>
 
@@ -42,7 +43,7 @@
                     <img onclick="pauseGame()" id="pause-img" src="./img/downloads/pause.png" alt="">
                     <img src="./img/downloads/fullscreen-icon.png" alt="">
                     <img id="volume" onclick="toggleVolume()" src="./img/downloads/volume-on.png" alt="">
-                    <img src="./img/downloads/gamepad-icon.png" alt="">
+                    <img onclick="showKeyboardAssignments()" src="./img/downloads/gamepad-icon.png" alt="">
                 </div>
                 <div onclick="startGame()" id="start-btn">
                     <span>Start Game</span>
@@ -67,19 +68,47 @@
                 <button onclick="continueGame()">Continue</button>
                 <button onclick="mainMenu()">Main Menu</button>
                 <button onclick="startGame()">Restart Game</button>
-                <button>Key Assignment</button>
+                <button onclick="showKeyboardAssignments()">Key Assignment</button>
                 <button onclick="toggleVolume()">Sound : <span id="menu-volume">On</span></button>
                 <button>Screen Size</button>
             </div>
         </div>
+        <div id="assignment-screen">
+            <div onclick="closeAssignments()" class="close-assignments">Close X</div>
+            <h1>Assignments</h1>
+            <div class="key-container">
+                <div class="keys">
+                    <img src="./img/downloads/keyboard_left.png" alt="">
+                    <span> / Walk Left</span>
+                </div>
+                <div class="keys">
+                    <img src="./img/downloads/keyboard_right.png" alt="">
+                    <span> / Walk Right</span>
+                </div>
+                <div class="keys">
+                    <img src="./img/downloads/keyboard_up.png" alt="">
+                    <span> / Jump</span>
+                </div>
+                <div class="keys">
+                    <img src="./img/downloads/keyboard_d.png" alt="">
+                    <span> / Throw Bottle</span>
+                </div>
+            </div>
+
+
+        </div>
         <div id="touch-panels">
             <div id="left-side">
-                <div id="left-touch-btn" class="touch-button"> <img id="left-img" src="./img/downloads/left_arrow.png" alt=""> </div>
-                <div id="right-touch-btn" class="touch-button"> <img id="right-img" src="img/downloads/right_arrow.png" alt=""></div>  
+                <div id="left-touch-btn" class="touch-button"> <img id="left-img" src="./img/downloads/left_arrow.png"
+                        alt=""> </div>
+                <div id="right-touch-btn" class="touch-button"> <img id="right-img" src="img/downloads/right_arrow.png"
+                        alt=""></div>
             </div>
             <div id="right-side">
-                <div id="jump-touch-btn" class="touch-button"> <img id="jump-img" src="./img/downloads/arrow_up.png" alt=""> </div>
-                <div id="throw-touch-btn" class="touch-button"> <img id="throw-img" src="img/6_salsa_bottle/2_salsa_bottle_on_ground.png" alt=""></div>  
+                <div id="jump-touch-btn" class="touch-button"> <img id="jump-img" src="./img/downloads/arrow_up.png"
+                        alt=""> </div>
+                <div id="throw-touch-btn" class="touch-button"> <img id="throw-img"
+                        src="img/6_salsa_bottle/2_salsa_bottle_on_ground.png" alt=""></div>
             </div>
         </div>
         <canvas id="canvas" width="720" height="480">
