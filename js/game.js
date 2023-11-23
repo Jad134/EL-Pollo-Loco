@@ -5,7 +5,7 @@ main_song = new Audio('audio/main-song.mp3')
 main_song.volume = 0.1;
 let isMuted = false;
 let gamePaused = false;
-
+let isFullScreen = false;
 
 async function init() {
     await startLevel();
@@ -42,7 +42,7 @@ function gameIsOverScreen() {
     let canvas = document.getElementById('canvas');
     document.getElementById('touch-panels').style = 'z-index: 0;'
     gameOverScreen.classList.add('active');
- 
+
     setTimeout(() => {
         clearAllIntervals();
     }, 900);
@@ -113,6 +113,7 @@ function pauseGame() {
     settings.style = 'display: none;'
     gamePaused = true;
     main_song.pause();
+    
 }
 
 
@@ -127,7 +128,7 @@ function continueGame() {
 }
 
 
-function showKeyboardAssignments(){
+function showKeyboardAssignments() {
     let assignmentscreen = document.getElementById('assignment-screen');
     let settings = document.getElementById('settings');
     document.getElementById('touch-panels').style = 'z-index: 0;'
@@ -138,13 +139,14 @@ function showKeyboardAssignments(){
 }
 
 
-function closeAssignments(){
+function closeAssignments() {
     let assignmentscreen = document.getElementById('assignment-screen');
     let settings = document.getElementById('settings');
     document.getElementById('touch-panels').style = 'z-index: 99;'
     assignmentscreen.classList.remove('active');
     settings.style = 'display: flex;'
     gamePaused = false;
+    continueGame();
 }
 
 
@@ -152,5 +154,44 @@ function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+function fullScreen() {
+    let gameContainer = document.getElementById('game-container');
+    let canvas = document.getElementById('canvas');
+    let screenSizeInfo = document.getElementById('screen-size-info');
+
+    if(!isFullScreen) {
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        screenSizeInfo.innerHTML = 'FullScreen'
+        enterFullscreen(gameContainer);
+        
+        isFullScreen = true;
+    } else {
+        canvas.style.width = '720px';
+        canvas.style.height = '480px';
+        screenSizeInfo.innerHTML = 'Normal'
+        exitFullscreen();
+        isFullScreen = false;
+    }
+}
 
 
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {  // iOS Safari
+        element.webkitRequestFullscreen();
+    }
+}
+
+
+function exitFullscreen() {
+    if(document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if(document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+  

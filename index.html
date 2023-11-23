@@ -36,12 +36,12 @@
 <body onload="">
     <h1>El pollo loco</h1>
 
-    <div class="game-container">
+    <div id="game-container" class="game-container">
         <div id="start-screen">
             <div class="upper-menu">
                 <div id="settings" class="settings">
                     <img onclick="pauseGame()" id="pause-img" src="./img/downloads/pause.png" alt="">
-                    <img src="./img/downloads/fullscreen-icon.png" alt="">
+                    <img onclick=" fullScreen()" src="./img/downloads/fullscreen-icon.png" alt="">
                     <img id="volume" onclick="toggleVolume()" src="./img/downloads/volume-on.png" alt="">
                     <img onclick="showKeyboardAssignments()" src="./img/downloads/gamepad-icon.png" alt="">
                 </div>
@@ -70,7 +70,7 @@
                 <button onclick="startGame()">Restart Game</button>
                 <button onclick="showKeyboardAssignments()">Key Assignment</button>
                 <button onclick="toggleVolume()">Sound : <span id="menu-volume">On</span></button>
-                <button>Screen Size</button>
+                <button id="screen-info" onclick="fullScreen()">Screen Size: <span id="screen-size-info">Normal</span></button>
             </div>
         </div>
         <div id="assignment-screen">
@@ -111,9 +111,9 @@
                         src="img/6_salsa_bottle/2_salsa_bottle_on_ground.png" alt=""></div>
             </div>
         </div>
-        <canvas id="canvas" width="720" height="480">
+        <canvas id="canvas" width="720" height="480"></canvas>
     </div>
-    </canvas>
+
 </body>
 
 </html>

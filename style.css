@@ -15,6 +15,7 @@ body {
     background-image: url('./img/downloads/desert.png');
     background-size: cover;
     font-family: 'zabars', Arial, Helvetica, sans-serif;
+    
 
 }
 
@@ -26,7 +27,7 @@ h1 {
 
 canvas {
     background-color: black;
-    display: block;
+    display: flex;
 }
 
 .game-container {
@@ -166,6 +167,10 @@ canvas {
     border-radius: 8px;
     letter-spacing: 2px;
     cursor: pointer;
+}
+
+#screen-info{
+    height: 64px;
 }
 
 #pause-screen {
