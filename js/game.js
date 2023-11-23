@@ -29,9 +29,11 @@ function mainMenu() {
 }
 
 async function startGame() {
+    clearAllIntervals()
     await init();
     removeEndScreen();
     main_song.currentTime = 0;
+    gamePaused = false;
 
 }
 
@@ -88,14 +90,17 @@ function playSong() {
 
 function toggleVolume() {
     let volumeImage = document.getElementById('volume');
+    let menuVolume = document.getElementById('menu-volume')
 
     isMuted = !isMuted;
     if (isMuted) {
         volumeImage.src = 'img/downloads/volume-off.png';
         main_song.volume = 0;
+        menuVolume.innerHTML = 'Off';
     } else {
         volumeImage.src = 'img/downloads/volume-on.png';
         main_song.volume = 0.1;
+        menuVolume.innerHTML = 'On';
 
     }
 
@@ -120,8 +125,6 @@ function continueGame(){
     main_song.play();
     gamePaused = false;   
 }
-
-
 
 
 function clearAllIntervals() {

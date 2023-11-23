@@ -32,19 +32,17 @@ class Coinbar extends DrawableObject {
             return 0;
         } else if (this.percentage == 1) {
             return 1;
-        } else if (this.percentage == 2) {
+        } else if (this.percentage == 2 || this.percentage == 3) {
             return 2;
         }
-        else if (this.percentage == 3) {
+        else if (this.percentage == 4 || this.percentage == 5) {
             return 3;
         }
-        else if (this.percentage == 4) {
+        else if (this.percentage >= 6 && this.percentage <= 8) {
             return 4;
-        }
-        else if (this.percentage == 5)
-            return 4;
-        else if (this.percentage >= 6)
+        } else if (this.percentage >= 9) {
             return 5;
+        }
 
     }
 

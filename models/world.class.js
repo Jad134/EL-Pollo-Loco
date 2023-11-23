@@ -15,11 +15,9 @@ class World {
     throwableObject = [];
     coins = 0;
     characterReachedBoss = false;
-    throw_sound = new Audio('audio/throwBottle.mp3')
+    throw_sound = new Audio('audio/throwBottle.mp3');
+    collectCoin_sound = new Audio('audio/coin.mp3');
     chickenPaused;
-   
-   
-
 
 
     constructor(canvas, keyboard) {
@@ -34,12 +32,12 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this; 
+        this.character.world = this;
     }
 
-    getEnemies(){
-       this.chickenPaused = this.level.getChicken().chickenPaused;
-       console.log(this.chickenPaused)
+    getEnemies() {
+        this.chickenPaused = this.level.getChicken().chickenPaused;
+        console.log(this.chickenPaused)
     }
 
     run() {
@@ -64,8 +62,6 @@ class World {
         }, 20);
 
     }
-
-    
 
 
     checkCharacterPosition() {
@@ -115,7 +111,7 @@ class World {
                 if (this.character.isAboveGround()) {
                     this.killChicken(enemy, index);
                     this.character.jump();
-                } else if (enemy.speed > 0) {
+                } else if (enemy.speed > 0 && !gamePaused) {
                     this.character.hit();
                     this.statusbar.setPercentage(this.character.energy)
                 }
@@ -125,7 +121,7 @@ class World {
 
     checkEndbossCollision() {
         this.level.endboss.forEach((endboss) => {
-            if (this.character.isColliding(endboss)) {
+            if (this.character.isColliding(endboss) && !gamePaused) {
                 //console.log('Collision with Charakter', this.character.isDead)
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.energy)
@@ -142,6 +138,10 @@ class World {
                     this.level.coins.splice(index, 1);
                     // Aktualisiert die Münzanzeige in der StatusBar und gibt die Anzahl der Coins mit
                     this.coinbar.setPercentageCoin(this.coins);
+                    if (!isMuted) {
+                        this.collectCoin_sound.play();
+                    }
+
                 }
             });
         });

@@ -103,7 +103,8 @@ class Endboss extends MovableObject {
 
     CharacterReachedBoss() {
         this.reachedBoss = true;
-       this.playEndbossSound();
+        this.playEndbossSound();
+       
     }
 
     animate() {
@@ -135,7 +136,6 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_WALKING)
             this.otherDirection = true;
             this.moveRight();
-            console.log('yes')
         } else if (this.reachedBoss && !this.CharacterIsBehind && !gamePaused) {
             this.speed = 20;
             this.playAnimation(this.IMAGES_WALKING)
@@ -158,8 +158,11 @@ class Endboss extends MovableObject {
 
     replayEndbossSound(){
         setInterval(() => {          
-            this.playEndbossSound();
             this.bigChickenSoundPlayed = false;
+        }, 10000);
+
+        setTimeout(() => {
+            this.playEndbossSound();
         }, 10000);
     }
 

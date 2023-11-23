@@ -68,7 +68,18 @@
                 <button onclick="mainMenu()">Main Menu</button>
                 <button onclick="startGame()">Restart Game</button>
                 <button>Key Assignment</button>
-                <button onclick="toggleVolume()">Sound : <span>On</span></button>
+                <button onclick="toggleVolume()">Sound : <span id="menu-volume">On</span></button>
+                <button>Screen Size</button>
+            </div>
+        </div>
+        <div id="touch-panels">
+            <div id="left-side">
+                <div class="touch-button"> <img id="left-img" src="./img/downloads/left_arrow.png" alt=""> </div>
+                <div class="touch-button"> <img id="right-img" src="img/downloads/right_arrow.png" alt=""></div>  
+            </div>
+            <div id="right-side">
+                <div class="touch-button"> <img id="jump-img" src="./img/downloads/arrow_up.png" alt=""> </div>
+                <div class="touch-button"> <img id="throw-img" src="img/6_salsa_bottle/2_salsa_bottle_on_ground.png" alt=""></div>  
             </div>
         </div>
         <canvas id="canvas" width="720" height="480">
