@@ -15,7 +15,7 @@ body {
     background-image: url('./img/downloads/desert.png');
     background-size: cover;
     font-family: 'zabars', Arial, Helvetica, sans-serif;
-    
+
 
 }
 
@@ -28,6 +28,7 @@ h1 {
 canvas {
     background-color: black;
     display: flex;
+
 }
 
 .game-container {
@@ -154,7 +155,7 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 .pause-buttons button {
@@ -169,7 +170,7 @@ canvas {
     cursor: pointer;
 }
 
-#screen-info{
+#screen-info {
     height: 64px;
 }
 
@@ -240,7 +241,7 @@ canvas {
     font-size: 48px;
 }
 
-.key-container{
+.key-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -248,7 +249,7 @@ canvas {
     gap: 8px;
 }
 
-.close-assignments{
+.close-assignments {
     cursor: pointer;
     font-size: 36px;
     display: flex;
@@ -313,19 +314,44 @@ canvas {
 
 
 @media only screen and (max-width: 720px) {
-    canvas {
+    #canvas {
         width: 100%;
+        height: 100vh;
+    }
+
+    #game-container {
+        width: 100%;
+        height: 100vh;
     }
 
     #start-btn {
         position: absolute;
         top: 30px;
     }
+
+    #throw-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    #jump-img,
+    #left-img,
+    #right-img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .touch-button {
+        width: 40px;
+        height: 40px;
+    }
+
 }
 
 @media only screen and (max-height: 480px) {
     canvas {
         width: 100%;
+        height: 100%;
     }
 }
 
@@ -354,6 +380,22 @@ canvas {
 
 @media (max-height: 550px) {
     h1 {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) {
+    #canvas {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    #game-container{
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .pause-settings{
         display: none;
     }
 }

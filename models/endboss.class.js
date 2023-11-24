@@ -64,6 +64,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_ATTACK);
         this.x = 5300
+        this.playEndbossSound()
         //this.walkLeftIfChracterIsClose();
         this.animate();
 
@@ -103,8 +104,8 @@ class Endboss extends MovableObject {
 
     CharacterReachedBoss() {
         this.reachedBoss = true;
-        this.playEndbossSound();
-       
+
+
     }
 
     animate() {
@@ -122,7 +123,7 @@ class Endboss extends MovableObject {
             this.y += 100;
             setTimeout(() => {
                 gameIsOverScreen();
-                
+
             }, 300);
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT)
@@ -147,17 +148,20 @@ class Endboss extends MovableObject {
         }
     }
 
-    playEndbossSound(){
-        if(!this.bigChickenSoundPlayed && !isMuted && !gamePaused){
-            this.bigChickenSound.play()
-            this.bigChickenSoundPlayed = true;
-        }   
+    playEndbossSound() {
+        setTimeout(() => {
+            if (!this.bigChickenSoundPlayed && !isMuted && !gamePaused && this.reachedBoss) {
+                this.bigChickenSound.play()
+                this.bigChickenSoundPlayed = true;
+            }
+        }, 100);
+
         this.replayEndbossSound();
     }
-   
 
-    replayEndbossSound(){
-        setInterval(() => {          
+
+    replayEndbossSound() {
+        setInterval(() => {
             this.bigChickenSoundPlayed = false;
         }, 10000);
 

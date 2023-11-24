@@ -10,6 +10,7 @@ let isFullScreen = false;
 async function init() {
     await startLevel();
     await removeStartScreen();
+    automaticFullScreen()
     touchButtonEvents();
     playSong();
     canvas = document.getElementById('canvas');
@@ -29,6 +30,7 @@ function mainMenu() {
 }
 
 async function startGame() {
+    level1 = [];
     clearAllIntervals()
     await init();
     removeEndScreen();
@@ -145,7 +147,6 @@ function closeAssignments() {
     document.getElementById('touch-panels').style = 'z-index: 99;'
     assignmentscreen.classList.remove('active');
     settings.style = 'display: flex;'
-    gamePaused = false;
     continueGame();
 }
 
@@ -192,6 +193,14 @@ function exitFullscreen() {
       document.exitFullscreen();
     } else if(document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
+    }
+  }
+
+  function automaticFullScreen(){
+    let h = parseInt(window.innerHeight);
+
+    if(h < 500){
+        fullScreen();
     }
   }
   

@@ -147,7 +147,7 @@ class Character extends MovableObject {
 
                 }
             let targetCameraPosition = -this.x + 500;
-            if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
+            if (this.world.keyboard.UP && !this.isAboveGround() && !gamePaused || this.world.keyboard.SPACE && !this.isAboveGround() && !gamePaused) {
                 this.jump();
             }
             if (this.world.keyboard.RIGHT && !gamePaused) {
