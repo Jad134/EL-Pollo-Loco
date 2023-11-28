@@ -65,10 +65,9 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.x = 5300
         this.playEndbossSound()
-        //this.walkLeftIfChracterIsClose();
         this.animate();
-
     }
+
 
     offset = {
         top: 30,
@@ -78,88 +77,118 @@ class Endboss extends MovableObject {
     }
 
 
-
+    /**
+     * This function starts the Endboss animations with different conditions
+     */
     walkLeftIfChracterIsClose() {
-        setInterval(() => {
-            if (this.reachedBoss && !gamePaused) {
-                this.moveLeft();
-            }
-        }, 1000 / 60);
+        setInterval(() => this.canEndbossMoveLeft(), 1000 / 60);
 
-        setInterval(() => {
-            if (this.reachedBoss && !gamePaused) {
-                this.playAnimation(this.IMAGES_WALKING)
-            }
-        }, 350);
+        setInterval(() => this.startWalkAnimation(), 350);
 
-        setInterval(() => {
-            if (!this.reachedBoss) {
-                this.playAnimation(this.IMAGES_STAY)
-            }
-        }, 500);
+        setInterval(() => this.letChickenStay(), 500);
+    }
 
 
+    canEndbossMoveLeft() {
+        if (this.reachedBoss && !gamePaused)
+            this.moveLeft();
+    }
+
+
+    startWalkAnimation() {
+        if (this.reachedBoss && !gamePaused)
+            this.playAnimation(this.IMAGES_WALKING)
+    }
+
+
+    letChickenStay() {
+        if (!this.reachedBoss)
+            this.playAnimation(this.IMAGES_STAY)
     }
 
 
     CharacterReachedBoss() {
         this.reachedBoss = true;
-
-
     }
+
 
     animate() {
         setInterval(() => {
             this.animations()
         }, 500);
-
-
     }
+
 
     animations() {
-        if (this.isDead()) {
-            this.speed = 0;
-            this.playAnimation(this.IMAGES_DEAD)
-            this.y += 100;
-            setTimeout(() => {
-                gameIsOverScreen();
-
-            }, 300);
-        } else if (this.isHurt()) {
-            this.playAnimation(this.IMAGES_HURT)
-
-        } else if (this.CharacterIsClose && !gamePaused) {
-            this.speed = 30;
-            this.playAnimation(this.IMAGES_ATTACK)
-            this.moveLeft();
-        } else if (this.CharacterIsBehind && !gamePaused) {
-            this.speed = 20;
-            this.playAnimation(this.IMAGES_WALKING)
-            this.otherDirection = true;
-            this.moveRight();
-        } else if (this.reachedBoss && !this.CharacterIsBehind && !gamePaused) {
-            this.speed = 20;
-            this.playAnimation(this.IMAGES_WALKING)
-            this.otherDirection = false;
-            this.moveLeft();
-        }
-        else if (!this.reachedBoss) {
-            this.playAnimation(this.IMAGES_STAY)
-        }
+        if (this.isDead())
+            this.showDeadChicken();
+        else if (this.isHurt())
+            this.playAnimation(this.IMAGES_HURT);
+        else if (this.CharacterIsClose && !gamePaused)
+            this.chickenAttacks();
+        else if (this.CharacterIsBehind && !gamePaused)
+            this.chickenMoveRight();
+        else if (this.reachedBoss && !this.CharacterIsBehind && !gamePaused)
+            this.chickenMoveLeft();
+        else if (!this.reachedBoss)
+            this.playAnimation(this.IMAGES_STAY);
     }
+
+
+    /**
+     * The following four functions are responsible for the respective animations
+     */
+    showDeadChicken() {
+        this.speed = 0;
+        this.playAnimation(this.IMAGES_DEAD)
+        this.y += 100;
+        setTimeout(() => {
+            gameIsOverScreen();
+        }, 300);
+    }
+
+
+    chickenAttacks() {
+        this.speed = 30;
+        this.playAnimation(this.IMAGES_ATTACK)
+        this.moveLeft();
+    }
+
+
+    chickenMoveRight() {
+        this.speed = 20;
+        this.playAnimation(this.IMAGES_WALKING)
+        this.otherDirection = true;
+        this.moveRight();
+    }
+
+    chickenMoveLeft() {
+        this.speed = 20;
+        this.playAnimation(this.IMAGES_WALKING)
+        this.otherDirection = false;
+        this.moveLeft();
+    }
+
 
     playEndbossSound() {
         setTimeout(() => {
-            if (!this.bigChickenSoundPlayed && !isMuted && !gamePaused && this.reachedBoss) {
+            if (this.allowChickenSound()) {
                 this.bigChickenSound.play()
                 this.bigChickenSoundPlayed = true;
             }
         }, 100);
-
         this.replayEndbossSound();
     }
 
 
+    allowChickenSound() {
+        return !this.bigChickenSoundPlayed && !isMuted && !gamePaused && this.reachedBoss
+    }
+
+
+    /**
+     * This function controls the time for the sound
+     */
     replayEndbossSound() {
         setInterval(() => {
             this.bigChickenSoundPlayed = false;

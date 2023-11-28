@@ -15,11 +15,10 @@ class Coin extends MovableObject {
         this.y = 150 + Math.random() * 200;
         this.animate();
     }
-    animate() {
 
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING)
-        }, 700);
+
+    animate() {
+        setInterval(() => this.playAnimation(this.IMAGES_WALKING), 700);
     }
 }
 

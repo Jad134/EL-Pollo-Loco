@@ -6,8 +6,8 @@ class DrawableObject {
     y = 280;
     height = 150;
     width = 100;
-    
-    
+
+
 
     loadImage(path) {
         this.img = new Image(); // this.img = document.getelementById('Image')
@@ -19,9 +19,13 @@ class DrawableObject {
     }
 
 
+    /**
+     * This function is only for checking the hitbox for movable Objects and is currently not in use. For use write in the if query instance of 'class'.
+     * 
+     * @param {CanvasRenderingContext2D} ctx 
+     */
     drawFrame(ctx) {
-
-        if (this instanceof Character || this instanceof Chicken || this instanceof ThrowableObject || this instanceof SmallChicken) {
+        if (0 == 1) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
@@ -30,6 +34,11 @@ class DrawableObject {
         }
     }
 
+    /**
+ * Preloads images and stores them in the image cache.
+ *
+ * @param {string[]} arr - An array of image paths to be preloaded.
+ */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();

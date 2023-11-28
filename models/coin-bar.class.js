@@ -21,12 +21,23 @@ class Coinbar extends DrawableObject {
 
     percentage = 0;
 
+   
+    /**
+     * This function indicates the respective image, depending on which percentage has been reached
+     * 
+     * @param {number} percentage 
+     */
     setPercentageCoin(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_COINBAR[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+
+    /**
+     * 
+     * @returns number depends on percentage for the Images Array
+     */
     resolveImageIndex() {
         if (this.percentage == 0) {
             return 0;

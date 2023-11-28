@@ -27,18 +27,13 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        this.getEnemies();
-
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    getEnemies() {
-        this.chickenPaused = this.level.getChicken().chickenPaused;
-        console.log(this.chickenPaused)
-    }
+    
 
     run() {
 
@@ -72,7 +67,7 @@ class World {
             endboss.CharacterIsBehind = false;
         }
 
-        if (Math.abs(this.character.x - endboss.x) < 200) {
+        if (Math.abs(this.character.x - endboss.x) < 100) {
             endboss.CharacterIsClose = true;
         } else {
             endboss.CharacterIsClose = false;

@@ -17,12 +17,10 @@ class CollectBottles extends MovableObject{
         this.x = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
         this.y = 320
         this.animate();
-        //this.throw(100, 150);
     }
-    animate() {
 
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_BOTTLED)
-        }, 700);
+
+    animate() {
+        setInterval(() => this.playAnimation(this.IMAGES_BOTTLED), 700);
     }
 }

@@ -5,7 +5,6 @@ class Chicken extends MovableObject {
     energy = 5;
     dead_chicken_sound = new Audio('audio/dead-chicken.mp3');
     deadSoundPlayed;
-   
 
 
     IMAGES_WALKING = [
@@ -26,7 +25,6 @@ class Chicken extends MovableObject {
         this.speed = 0.15 + Math.random() * 0.25;
         this.animate();
         this.resetChickenSound();
-
     }
 
 
@@ -39,28 +37,51 @@ class Chicken extends MovableObject {
 
 
     animate() {
-        
-        setInterval(() => {
-            if(!gamePaused){
-                this.moveLeft();
-            }      
-        }, 1000 / 60);
+        setInterval(() => this.moveLeft(), 1000 / 60);
+
+        setInterval(() => this.checkChickenAnimations(), 100);
+    }
 
 
+    /**
+     * If game is not paused, the chicken walks left
+     */
+    moveLeft(){
+        if (!gamePaused) {
+            super.moveLeft();
+        }
+    }
 
-        setInterval(() => {
-            if (this.isDead()) {
-                this.loadImage(this.IMAGES_DEAD);
-                if (!this.deadSoundPlayed) {
-                    this.playSound();
-                    this.deadSoundPlayed = true;
-                }
-                this.chickenFallsDown();
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
+
+    chickenDead() {
+        return this.isDead()
+    }
+
+
+    showDeadChickenImg() {
+        this.loadImage(this.IMAGES_DEAD);
+    }
+
+
+    controlDeadSoud() {
+        this.playSound();
+        this.deadSoundPlayed = true;
+    }
+
+
+    /**
+     * This function checks which animation is needed for the chicken
+     */
+    checkChickenAnimations() {
+        if (this.chickenDead()) {
+            this.showDeadChickenImg();
+            if (!this.deadSoundPlayed) {
+                this.controlDeadSoud();
             }
-        }, 100);
-
+            this.chickenFallsDown();
+        } else {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
     }
 
 
@@ -72,6 +93,9 @@ class Chicken extends MovableObject {
     }
 
 
+    /**
+     * This function causes the chicken to fall downwards after death
+     */
     chickenFallsDown() {
         setTimeout(() => {
             this.y += 10;
@@ -82,11 +106,12 @@ class Chicken extends MovableObject {
     }
 
 
+    /**
+     * This function prevents the chicken sounds from repeating
+     */
     resetChickenSound() {
         setTimeout(() => {
             this.deadSoundPlayed = false;
         }, 1000);
-
-
     }
 }
