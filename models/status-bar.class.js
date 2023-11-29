@@ -22,12 +22,23 @@ class StatusBar extends DrawableObject {
         this.setPercentage(100);
     }
 
+
+    /**
+     * This function indicates the respective image, depending on which percentage has been reached
+     * 
+     * @param {number} percentage 
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_ENERGY[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+
+    /**
+     * 
+     * @returns number depends on percentage for the Images Array
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

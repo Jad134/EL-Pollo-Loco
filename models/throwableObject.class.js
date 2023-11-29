@@ -41,39 +41,65 @@ class ThrowableObject extends MovableObject {
         bottom: 10,
     }
 
+
     throw() {
         this.speedY = 30;
         this.applyGravity();
-        let moveInterval = setInterval(() => {
-
-            if (!this.bottleHit && this.direction) {
-                this.x -= 10;
-                if (this.y > 350) {
-                    this.bottleHit = true;
-                }
-            } else
-                if (!this.bottleHit && !this.walkLeft) {
-                    this.x += 10;
-
-                    if (this.y > 350) {
-                        this.bottleHit = true;
-                    }
-                } else {
-                    clearInterval(this.applyGravityInterval);
-                    setTimeout(() => { // hide bottle from canvas
-                        this.x = 0;
-                        this.y = -340;
-                    }, 350);
-                    clearInterval(moveInterval);
-                }
-            //console.log(this.walkLeft)
-
-        }, 25);
+        let moveInterval = setInterval(() => this.throwBottle(moveInterval), 25);
         this.animate()
-
     }
 
-    // this.y > 320
+
+    /**
+     * This function controls the speed and direction of the thrown bottles
+     * 
+     * @param {intervall} moveInterval 
+     */
+    throwBottle(moveInterval) {
+        if (this.otherDirectionTrue()) {
+            this.x -= 10;
+            if (this.bottleHitGround()) {
+                this.bottleHit = true;
+            }
+        } else
+            if (this.otherDirectionFalse()) {
+                this.x += 10;
+                if (this.bottleHitGround()) {
+                    this.bottleHit = true;
+                }
+            } else {
+                clearInterval(this.applyGravityInterval);
+                this.hideBottleFromCanvas()
+                clearInterval(moveInterval);
+            }
+    }
+
+
+    otherDirectionTrue() {
+        return !this.bottleHit && this.direction
+    }
+
+
+    bottleHitGround() {
+        return this.y > 350
+    }
+
+
+    otherDirectionFalse() {
+        return !this.bottleHit && !this.walkLeft
+    }
+
+
+    /**
+     * This function places the bottles outside the viewing area of ​​the canvas
+     */
+    hideBottleFromCanvas() {
+        setTimeout(() => {
+            this.x = 0;
+            this.y = -340;
+        }, 350);
+    }
+
 
     animate() {
         setInterval(() => {
@@ -85,16 +111,28 @@ class ThrowableObject extends MovableObject {
         }, 80);
     }
 
+
+    /**
+     * This function is for the splash animation and smash sound responsible
+     */
     smashBottle() {
         this.playAnimation(this.IMAGES_BOTTLESPLASH)
-        if(!isMuted){
+        if (!isMuted) {
             this.smashBottle_sound.play();
         }
-        this.speedY = 0;
-        this.acceleration = 0;
+        this.setBottleSpeedZero()
         setTimeout(() => {
             this.bottleHit = false;
         }, 500);
+    }
+
+
+    /**
+     * This function prevents the burst bottle from sliding further
+     */
+    setBottleSpeedZero() {
+        this.speedY = 0;
+        this.acceleration = 0;
     }
 
 }

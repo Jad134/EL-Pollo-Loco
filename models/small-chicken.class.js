@@ -1,4 +1,4 @@
-class SmallChicken extends MovableObject{
+class SmallChicken extends MovableObject {
     y = 370;
     height = 50;
     width = 40;
@@ -36,35 +36,60 @@ class SmallChicken extends MovableObject{
 
 
     animate() {
-        setInterval(() => {
-            if(!gamePaused){
-                this.moveLeft();
-            }      
-        }, 1000 / 60);
+        setInterval(() => this.moveLeft(), 1000 / 60);
 
-        setInterval(() => {
-            if (this.isDead()) {
-                this.loadImage(this.IMAGES_DEAD)
-                if(!this.deadChickSoundPlayed){
-                    this.playSound();
-                    this.deadChickSoundPlayed = true;
-                }
-                setTimeout(() => {
-                    this.y += 10
-                }, 1000);
-            } else {
-                this.playAnimation(this.IMAGES_WALKING)
-            }
-        }, 100);
-
+        setInterval(() => this.smallChickenAnimations(), 100);
     }
 
-    
-    playSound(){
-        if(!isMuted){
+
+    moveLeft() {
+        if (!gamePaused) {
+            super.moveLeft();
+        }
+    }
+
+/**
+ * This function is for the animations to control which animation is needed
+ */
+    smallChickenAnimations() {
+        if (this.isDead()) {
+            this.loadImage(this.IMAGES_DEAD)
+            this.controlDeadChickenSound();
+            this.smallChickenFallDown();
+        } else {
+            this.playAnimation(this.IMAGES_WALKING)
+        }
+    }
+
+/**
+ *  This function causes the chicken to fall downwards after death
+ */
+    smallChickenFallDown() {
+        setTimeout(() => {
+            this.y += 10
+        }, 1000);
+    }
+
+
+    /**
+     * This function checks whether the sound should be played
+     */
+    controlDeadChickenSound(){
+        if (!this.deadChickSoundPlayed) {
+            this.playSound();
+            this.deadChickSoundPlayed = true;
+        }
+    }
+
+
+    /**
+     * This function is for setting the sound
+     */
+    playSound() {
+        if (!isMuted) {
             this.dead_chick_sound.currentTime = 2.9;
             this.dead_chick_sound.play();
-        }   
+        }
     }
 }
 

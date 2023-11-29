@@ -6,11 +6,11 @@ main_song.volume = 0.1;
 let isMuted = false;
 let gamePaused = false;
 let isFullScreen = false;
+let startAtStartScreen = true;
 
 async function init() {
     await startLevel();
     await removeStartScreen();
-    automaticFullScreen()
     touchButtonEvents();
     playSong();
     canvas = document.getElementById('canvas');
@@ -18,6 +18,10 @@ async function init() {
     console.log('Charcter is', world.character, world.enemies);
 }
 
+
+/**
+ * This function shows the main menu
+ */
 function mainMenu() {
     removeEndScreen()
     document.getElementById('start-screen').style.backgroundImage = 'url(img/9_intro_outro_screens/start/startscreen_2.png)'
@@ -27,7 +31,9 @@ function mainMenu() {
     document.getElementById('touch-panels').style = 'z-index: 0;'
     main_song.pause();
     main_song.currentTime = 0;
+    startAtStartScreen = true;
 }
+
 
 async function startGame() {
     level1 = [];
@@ -36,12 +42,15 @@ async function startGame() {
     removeEndScreen();
     main_song.currentTime = 0;
     gamePaused = false;
-
+    startAtStartScreen = false;
 }
 
+
+/**
+ * This function shows the winning screen if the Endboss is dead
+ */
 function gameIsOverScreen() {
     let gameOverScreen = document.getElementById('game-over-title')
-    let canvas = document.getElementById('canvas');
     document.getElementById('touch-panels').style = 'z-index: 0;'
     gameOverScreen.classList.add('active');
 
@@ -50,6 +59,10 @@ function gameIsOverScreen() {
     }, 900);
 }
 
+
+/**
+ * This function shows the loose screen if the character is dead
+ */
 function gameIsLostScreen() {
     let gameOverScreen = document.getElementById('game-loose-title')
     let canvas = document.getElementById('canvas');
@@ -61,6 +74,10 @@ function gameIsLostScreen() {
     }, 900);
 }
 
+
+/**
+ * This function removes the main menu when starting the game
+ */
 async function removeStartScreen() {
     setTimeout(() => {
         document.getElementById('start-screen').style.backgroundImage = 'none'
@@ -71,6 +88,10 @@ async function removeStartScreen() {
 
 }
 
+
+/**
+ * This function removes the endscreens
+ */
 function removeEndScreen() {
     let canvas = document.getElementById('canvas');
     let gameOverScreen = document.getElementById('game-over-title');
@@ -80,7 +101,6 @@ function removeEndScreen() {
     gameLostScreen.classList.remove('active');
     gameOverScreen.classList.remove('active');
     pauseScreen.classList.remove('active');
-
 }
 
 
@@ -89,6 +109,9 @@ function playSong() {
 }
 
 
+/**
+ * This function is for the volume button at the right top corner and the menu
+ */
 function toggleVolume() {
     let volumeImage = document.getElementById('volume');
     let menuVolume = document.getElementById('menu-volume')
@@ -107,6 +130,9 @@ function toggleVolume() {
 }
 
 
+/**
+ * This function pauses the game. The gamePaused variable is global for every function which need to paused the game
+ */
 function pauseGame() {
     let pauseScreen = document.getElementById('pause-screen');
     let settings = document.getElementById('settings');
@@ -119,6 +145,9 @@ function pauseGame() {
 }
 
 
+/**
+ * This function continues the game
+ */
 function continueGame() {
     let pauseScreen = document.getElementById('pause-screen');
     let settings = document.getElementById('settings');
@@ -130,6 +159,9 @@ function continueGame() {
 }
 
 
+/**
+ * This function is for the keyboard assignment screen
+ */
 function showKeyboardAssignments() {
     let assignmentscreen = document.getElementById('assignment-screen');
     let settings = document.getElementById('settings');
@@ -141,19 +173,28 @@ function showKeyboardAssignments() {
 }
 
 
+/**
+ * This function close the Assignment screen
+ */
 function closeAssignments() {
     let assignmentscreen = document.getElementById('assignment-screen');
-    let settings = document.getElementById('settings');
-    document.getElementById('touch-panels').style = 'z-index: 99;'
+    let settings = document.getElementById('settings'); 
     assignmentscreen.classList.remove('active');
     settings.style = 'display: flex;'
-    continueGame();
+    if(!startAtStartScreen){
+        continueGame();
+        document.getElementById('touch-panels').style = 'z-index: 99;'
+    }   
 }
 
 
+/**
+ * This function clears all intervals. Only for stop the game.
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
+
 
 function fullScreen() {
     let gameContainer = document.getElementById('game-container');
@@ -196,11 +237,6 @@ function exitFullscreen() {
     }
   }
 
-  function automaticFullScreen(){
-    let h = parseInt(window.innerHeight);
 
-    if(h < 500){
-        fullScreen();
-    }
-  }
+  
   
