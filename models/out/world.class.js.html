@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: world.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: world.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class World {
+    character = new Character();
+    level = level1;
+    canvas;
+    ctx;
+    keyboard;
+    camera_x = 0;
+    bottle = new ThrowableObject();
+    statusbar = new StatusBar();
+    coinbar = new Coinbar();
+    bottlebar = new Bottlebar();
+    endbossbar = new Endbossbar();
+    endbossbarLogo = new EndbossbarLogo();
+    levelEndRock = new Rock();
+    throwableObject = [];
+    coins = 0;
+    characterReachedBoss = false;
+    throw_sound = new Audio('audio/throwBottle.mp3');
+    collectCoin_sound = new Audio('audio/coin.mp3');
+    chickenPaused;
+
+
+    constructor(canvas, keyboard) {
+        this.ctx = canvas.getContext('2d');
+        this.canvas = canvas;
+        this.keyboard = keyboard;
+        this.draw();
+        this.setWorld();
+        this.run();
+    }
+
+
+    setWorld() {
+        this.character.world = this;
+    }
+
+
+    /**
+     * This function is for functions which have to run permanently
+     */
+    run() {
+        setInterval(() => {
+            this.checkThrowObjects();
+            this.checkBottleHitEndboss();
+            this.checkBottleCollision();
+        }, 200);
+
+        setInterval(() => {
+            this.checkEndbossCollision();
+            this.checkCharacterReachedBoss();
+        }, 50);
+
+        setInterval(() => {
+            this.checkEnemyCollision();
+            this.checkCoinCollision();
+            this.checkBottleHitEnemy();
+            this.checkCharacterPosition();
+        }, 20);
+
+    }
+
+
+    /**
+     * This function checks the position between the character and the Endboss
+     */
+    checkCharacterPosition() {
+        let endboss = this.level.getEndboss()
+        if (this.characterIsBehindEndboss(endboss))
+            endboss.CharacterIsBehind = true
+        else
+            endboss.CharacterIsBehind = false;
+        if (this.characterIsCloseToEndboss(endboss))
+            endboss.CharacterIsClose = true;
+        else
+            endboss.CharacterIsClose = false;
+    }
+
+
+    characterIsBehindEndboss(endboss) {
+        return this.character.x > endboss.x
+    }
+
+
+    characterIsCloseToEndboss(endboss) {
+        return Math.abs(this.character.x - endboss.x) &lt; 100
+    }
+
+
+    /**
+     * This function sets the character reached boss variable in the endboss class to true.With that the endboss starts running
+     */
+    checkCharacterReachedBoss() {
+        if (this.characterHasReachedBoss()) {
+            this.characterReachedBoss = true;
+            this.level.getEndboss().CharacterReachedBoss();
+        }
+    }
+
+
+    characterHasReachedBoss() {
+        return this.character.x > 4999
+    }
+
+
+    checkThrowObjects() {
+        if (this.isBottleThrowable()) {
+            if (!isMuted)
+                this.throw_sound.play()
+            if (this.characterLooksRight())
+                this.createBottle();
+            else if (this.characterLooksLeft()) {
+                this.createBottle();
+            }
+            this.reduceBottleFromInventar();
+        }
+    }
+
+
+    isBottleThrowable() {
+        return this.keyboard.D &amp;&amp; this.bottlebar.percentage > 0
+    }
+
+
+    characterLooksRight() {
+        return !this.character.otherDirection
+    }
+
+
+    characterLooksLeft() {
+        return this.character.otherDirection
+    }
+
+
+    createBottle() {
+        let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 100, this.character.otherDirection)
+        this.throwableObject.push(bottle)
+    }
+
+
+    reduceBottleFromInventar() {
+        this.bottlebar.percentage -= 1;
+        this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
+    }
+
+
+    checkEnemyCollision() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.characterIsCollidingWithEnemy(enemy)) {
+                if (this.characterIsAboveGround()) {
+                    this.killChicken(enemy, index);
+                    this.character.jump();
+                } else if (enemy.speed > 0 &amp;&amp; !gamePaused) {
+                    this.character.hit();
+                    this.statusbar.setPercentage(this.character.energy)
+                }
+            }
+        });
+    }
+
+
+    characterIsCollidingWithEnemy(enemy) {
+        return this.character.isColliding(enemy)
+    }
+
+
+    characterIsAboveGround() {
+        return this.character.isAboveGround()
+    }
+
+
+    checkEndbossCollision() {
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss) &amp;&amp; !gamePaused) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy)
+            }
+        });
+    }
+
+
+    checkCoinCollision() {
+        this.level.coins.forEach((coin) => {
+            this.level.coins.forEach((coin, index) => {
+                if (this.character.isColliding(coin))
+                    this.getCoin(index);
+            });
+        });
+    }
+
+
+    getCoin(index) {
+        this.coins += 1;
+        this.level.coins.splice(index, 1);
+        this.coinbar.setPercentageCoin(this.coins);
+        if (!isMuted) {
+            this.collectCoin_sound.play();
+        }
+    }
+
+
+    checkBottleCollision() {
+        this.level.bottles.forEach((b) => {
+            this.level.bottles.forEach((bottle, index) => {
+                if (this.characterIsCollidingBottle(bottle)) {
+                    this.addBottleToInventar(index);
+                }
+            });
+        });
+    }
+
+
+    characterIsCollidingBottle(bottle) {
+        return this.character.isColliding(bottle)
+    }
+
+
+    addBottleToInventar(index) {
+        this.bottlebar.percentage += 1;
+        this.level.bottles.splice(index, 1);
+        this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
+    }
+
+
+    checkBottleHitEnemy() {
+        this.throwableObject.forEach((bottle, tindex) => {
+            this.level.enemies.forEach((enemy, index) => {
+                if (this.bottleHitEnemy(bottle, enemy)) {
+                    this.hitEnemy(bottle, enemy, index)
+                }
+            })
+        })
+    };
+
+
+    bottleHitEnemy(bottle, enemy) {
+        return !bottle.bottleHit &amp;&amp; bottle.isColliding(enemy)
+    }
+
+
+    hitEnemy(bottle, enemy, index) {
+        bottle.bottleHit = true;
+        this.killChicken(enemy, index);
+    }
+
+
+    checkBottleHitEndboss() {
+        this.throwableObject.forEach((bottle, index) => {
+            this.level.endboss.forEach((endboss) => {
+                if (this.bottleHitEndboss(endboss, bottle)) {
+                    this.hitEndboss(endboss, bottle);
+                }
+            })
+        })
+    }
+
+
+    bottleHitEndboss(endboss, bottle) {
+        return !bottle.bottleHit &amp;&amp; bottle.isColliding(endboss)
+    }
+
+
+    hitEndboss(endboss, bottle) {
+        bottle.bottleHit = true;
+        endboss.hitEnemy();
+        this.endbossbar.setPercentage(endboss.energy)
+    }
+
+
+    killChicken(enemy, index) {
+        enemy.speed = 0;
+        enemy.hitEnemy();
+    }
+
+
+    /**
+     * Renders the game elements on the canvas.
+     */
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.ctx.translate(-this.camera_x, 0); //back
+
+        //----------------------------- Space for Fixed Objects--------------
+        this.addToMap(this.statusbar);
+        this.addToMap(this.coinbar);
+        this.addToMap(this.bottlebar);
+        if (this.characterReachedBoss) {
+            this.addToMap(this.endbossbar)
+            this.addToMap(this.endbossbarLogo)
+        }
+        this.ctx.translate(this.camera_x, 0);
+
+
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.endboss);
+        this.addObjectsToMap(this.throwableObject);
+        this.addToMap(this.levelEndRock)
+        this.addToMap(this.character);
+
+        this.ctx.translate(-this.camera_x, 0);
+
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw()
+
+        });
+    }
+
+
+    /**
+     * Adds an array of game objects to the map
+     *
+     * @param {Array} objects - An array of game objects to be added to the map
+     */
+    addObjectsToMap(objects) {
+        objects.forEach(o => {
+            this.addToMap(o)
+        });
+    }
+
+
+    /**
+     * Adds a single game object to the map and handles the drawing process
+     * 
+     * @param {Object} mo The game object to be added to the map
+     */
+    addToMap(mo) {
+        if (mo.otherDirection) {
+            this.flipImage(mo);
+        }
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
+
+        if (mo.otherDirection) {
+            this.flipImageBack(mo);
+        }
+    }
+
+
+
+    /**
+     * Flips the image horizontally for a given game object
+     * 
+     * @param {Object} mo - The game object whose image is to be flipped
+     */
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1)
+        mo.x = mo.x * -1;
+    }
+
+
+    /**
+     * Restores the context after a horizontal image flip
+     * 
+     * @param {Object} mo - The game object for which the image was flipped
+     */
+    flipImageBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
+    }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Character.html">Character</a></li><li><a href="Level.html">Level</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Nov 29 2023 18:54:40 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

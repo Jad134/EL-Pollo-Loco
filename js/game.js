@@ -15,7 +15,6 @@ async function init() {
     playSong();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-    console.log('Charcter is', world.character, world.enemies);
 }
 
 
