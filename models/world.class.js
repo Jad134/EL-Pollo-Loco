@@ -18,6 +18,9 @@ class World {
     throw_sound = new Audio('audio/throwBottle.mp3');
     collectCoin_sound = new Audio('audio/coin.mp3');
     chickenPaused;
+    previousTime;
+    currentTime;
+    elapsedTimeInSeconds;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -26,6 +29,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.previousTime = Date.now();
     }
 
 
@@ -39,10 +43,6 @@ class World {
      */
     run() {
 
-        setInterval(() => {
-            
-        }, 1000);
-        
         setInterval(() => {
             this.checkThrowObjects();
             this.checkBottleHitEndboss();
@@ -116,12 +116,20 @@ class World {
                 this.createBottle();
             }
             this.reduceBottleFromInventar();
+            this.previousTime = Date.now();
         }
     }
 
 
     isBottleThrowable() {
-        return this.keyboard.D && this.bottlebar.percentage > 0
+        this.setThrowedTime();
+        return this.keyboard.D && this.bottlebar.percentage > 0 && this.elapsedTimeInSeconds > 0.5
+    }
+
+
+    setThrowedTime() {
+        this.currentTime = Date.now();
+        this.elapsedTimeInSeconds = (this.currentTime - this.previousTime) / 1000;
     }
 
 
