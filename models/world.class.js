@@ -38,6 +38,11 @@ class World {
      * This function is for functions which have to run permanently
      */
     run() {
+
+        setInterval(() => {
+            
+        }, 1000);
+        
         setInterval(() => {
             this.checkThrowObjects();
             this.checkBottleHitEndboss();
