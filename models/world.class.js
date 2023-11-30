@@ -170,7 +170,7 @@ class World {
     checkEndbossCollision() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && !gamePaused) {
-                this.character.hit();
+                this.character.hitFromEndboss();
                 this.statusbar.setPercentage(this.character.energy)
             }
         });

@@ -149,21 +149,21 @@ class Endboss extends MovableObject {
 
 
     chickenAttacks() {
-        this.speed = 30;
+        this.speed = 50;
         this.playAnimation(this.IMAGES_ATTACK)
         this.moveLeft();
     }
 
 
     chickenMoveRight() {
-        this.speed = 20;
+        this.speed = 40;
         this.playAnimation(this.IMAGES_WALKING)
         this.otherDirection = true;
         this.moveRight();
     }
 
     chickenMoveLeft() {
-        this.speed = 20;
+        this.speed = 40;
         this.playAnimation(this.IMAGES_WALKING)
         this.otherDirection = false;
         this.moveLeft();
