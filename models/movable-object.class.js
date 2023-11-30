@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     applyGravityInterval = 0;
 
-
+    
     /**
      * This function is for the gravity e.g. the character jump and the bottle throw
      */
@@ -97,7 +97,7 @@ class MovableObject extends DrawableObject {
      */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000;
+        timepassed = timepassed / 700;
         return timepassed < 1;
     }
 

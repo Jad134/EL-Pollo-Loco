@@ -19,7 +19,6 @@ class World {
     collectCoin_sound = new Audio('audio/coin.mp3');
     chickenPaused;
 
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -164,7 +163,7 @@ class World {
 
 
     characterIsAboveGround() {
-        return this.character.isAboveGround()
+        return this.character.isAboveGround() && !this.character.isHurt()
     }
 
 
