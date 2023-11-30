@@ -85,6 +85,9 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function is for when the character takes damage from the endboss
+     */
     hitFromEndboss() {
         this.energy -= 3.5;
         if (this.energy < 0) {
@@ -129,16 +132,25 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function let the characters walk right
+     */
     moveRight() {
         this.x += this.speed;
     }
 
 
+    /**
+     * This function let the characters walk left
+     */
     moveLeft() {
         this.x -= this.speed;
     }
 
 
+    /**
+     * This function let the characters jump
+     */
     jump() {
         this.speedY = 30;
     }

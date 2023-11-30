@@ -18,6 +18,8 @@ class Level {
      * @param {class} coins 
      * @param {class} bottles 
      */
+
+    
     constructor(enemies, enboss, clouds, backgroundObjects, coins, bottles ) {
         this.enemies = enemies;
         this.endboss = enboss;

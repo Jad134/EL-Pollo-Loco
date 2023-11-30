@@ -33,6 +33,10 @@ class World {
     }
 
 
+    /**
+     * This function is used to set the world class to the character class. now the character class can use characteristics from world
+
+     */
     setWorld() {
         this.character.world = this;
     }
@@ -80,11 +84,21 @@ class World {
     }
 
 
+    /**
+     * 
+     * @param {class} endboss 
+     * @returns the requirement, that the character is behind the endboss
+     */
     characterIsBehindEndboss(endboss) {
         return this.character.x > endboss.x
     }
 
 
+    /**
+     * 
+     * @param {class} endboss 
+     * @returns the requirement, that the character is close to the endboss
+     */
     characterIsCloseToEndboss(endboss) {
         return Math.abs(this.character.x - endboss.x) < 100
     }
@@ -101,11 +115,18 @@ class World {
     }
 
 
+    /**
+     * 
+     * @returns the requirement, that the character reached the endboss. This is needed for the endboss to start running
+     */
     characterHasReachedBoss() {
         return this.character.x > 4999
     }
 
 
+    /**
+     * This function is for the character, that he can throw a bottle
+     */
     checkThrowObjects() {
         if (this.isBottleThrowable()) {
             if (!isMuted)
@@ -116,45 +137,69 @@ class World {
                 this.createBottle();
             }
             this.reduceBottleFromInventar();
-            this.previousTime = Date.now();
+            this.previousTime = Date.now(); //This is useful to check the time for throwing bottles
         }
     }
 
 
+    /**
+     * 
+     * @returns the requirement to throw a bottle
+     */
     isBottleThrowable() {
         this.setThrowedTime();
         return this.keyboard.D && this.bottlebar.percentage > 0 && this.elapsedTimeInSeconds > 0.5
     }
 
 
+    /**
+     * This function checked the time. This allows you to set the time that should pass until you can throw a bottle
+     */
     setThrowedTime() {
         this.currentTime = Date.now();
         this.elapsedTimeInSeconds = (this.currentTime - this.previousTime) / 1000;
     }
 
 
+    /**
+     * 
+     * @returns the direction from the character (right)
+     */
     characterLooksRight() {
         return !this.character.otherDirection
     }
 
 
+    /**
+     * 
+     * @returns the direction from the character (left)
+     */
     characterLooksLeft() {
         return this.character.otherDirection
     }
 
 
+    /**
+     * This function create a throwable bottle. The constructor is used for the coordinates and the 'this.character.otherDirection' for the direction in the throwable class
+     */
     createBottle() {
         let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 100, this.character.otherDirection)
         this.throwableObject.push(bottle)
     }
 
 
+    /**
+     * This function reduce the bottle from inventar and the bottlebar
+     */
     reduceBottleFromInventar() {
         this.bottlebar.percentage -= 1;
         this.bottlebar.setPercentageBottle(this.bottlebar.percentage);
     }
 
 
+    /**
+     * This function checks if the character is colliging with an enemy and controls the following events
+     */
     checkEnemyCollision() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.characterIsCollidingWithEnemy(enemy)) {
@@ -170,16 +215,28 @@ class World {
     }
 
 
+    /**
+     * 
+     * @param {class} enemy 
+     * @returns the requirement for an collision with an enemy
+     */
     characterIsCollidingWithEnemy(enemy) {
         return this.character.isColliding(enemy)
     }
 
 
+    /**
+     * 
+     * @returns the requirement for jumping on the enemy without get damage from the top. If the character is hurt at the moment, he cant kill an enemy 
+     */
     characterIsAboveGround() {
         return this.character.isAboveGround() && !this.character.isHurt()
     }
 
 
+    /**
+     * This function checks, if the character is colliding with the endboss
+     */
     checkEndbossCollision() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && !gamePaused) {
@@ -190,6 +247,9 @@ class World {
     }
 
 
+    /**
+     * This function checks, if the character is colliding with an coin
+     */
     checkCoinCollision() {
         this.level.coins.forEach((coin) => {
             this.level.coins.forEach((coin, index) => {
@@ -200,6 +260,9 @@ class World {
     }
 
 
+    /**
+     * This function delete the coin from the map and add themn to the inventar (Coinbar)
+     */
     getCoin(index) {
         this.coins += 1;
         this.level.coins.splice(index, 1);
@@ -210,6 +273,9 @@ class World {
     }
 
 
+    /**
+     * This function checks, if the character is colliding with an collactable bottle to add them to the inventar
+     */
     checkBottleCollision() {
         this.level.bottles.forEach((b) => {
             this.level.bottles.forEach((bottle, index) => {
@@ -221,11 +287,18 @@ class World {
     }
 
 
+    /**
+     * 
+     * @returns the requirement to collect a bottle
+     */
     characterIsCollidingBottle(bottle) {
         return this.character.isColliding(bottle)
     }
 
 
+    /**
+     * This function add the bottle to the inventar and delet them from the map
+     */
     addBottleToInventar(index) {
         this.bottlebar.percentage += 1;
         this.level.bottles.splice(index, 1);
@@ -233,6 +306,9 @@ class World {
     }
 
 
+    /**
+     * This function checks, if the throwable bottle hit an enemy
+     */
     checkBottleHitEnemy() {
         this.throwableObject.forEach((bottle, tindex) => {
             this.level.enemies.forEach((enemy, index) => {
@@ -244,17 +320,28 @@ class World {
     };
 
 
+    /**
+     * 
+     * @returns the requirement to hit an enemy with an throwable bottle
+     */
     bottleHitEnemy(bottle, enemy) {
         return !bottle.bottleHit && bottle.isColliding(enemy)
     }
 
 
+    /**
+     * 
+     * This function is for the action responsible, if an bottle hit an enemy
+     */
     hitEnemy(bottle, enemy, index) {
         bottle.bottleHit = true;
         this.killChicken(enemy, index);
     }
 
 
+   /**
+     * This function checks, if the throwable bottle hit the endboss
+     */
     checkBottleHitEndboss() {
         this.throwableObject.forEach((bottle, index) => {
             this.level.endboss.forEach((endboss) => {
@@ -266,11 +353,18 @@ class World {
     }
 
 
+    /**
+     * 
+     * @returns the requirement to hit the endboss with an bottle
+     */
     bottleHitEndboss(endboss, bottle) {
         return !bottle.bottleHit && bottle.isColliding(endboss)
     }
 
 
+    /**
+     * This function controls what happen, if an bottle hit the endboss
+     */
     hitEndboss(endboss, bottle) {
         bottle.bottleHit = true;
         endboss.hitEnemy();
@@ -278,6 +372,10 @@ class World {
     }
 
 
+    /**
+     * 
+     * This function let the chicken die
+     */
     killChicken(enemy, index) {
         enemy.speed = 0;
         enemy.hitEnemy();

@@ -8,12 +8,20 @@ class DrawableObject {
     width = 100;
 
 
-
+    /**
+     * Bider loads these images and coordinates them. You can use this function for the whole project to load images
+     */
     loadImage(path) {
         this.img = new Image(); // this.img = document.getelementById('Image')
         this.img.src = path;
     }
 
+
+    /**
+     * This function draws the canvas and the whole game
+     * 
+     * @param {CanvasRenderingContext2D} ctx 
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }

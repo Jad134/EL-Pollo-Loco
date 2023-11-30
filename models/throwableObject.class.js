@@ -42,6 +42,9 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * This function are the settings for the throwing bottles
+     */
     throw() {
         this.speedY = 30;
         this.applyGravity();
@@ -75,16 +78,28 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /**
+     * 
+     * @returns the requirements to throw the bottles to the left
+     */
     otherDirectionTrue() {
         return !this.bottleHit && this.direction
     }
 
 
+    /**
+     * 
+     * @returns the bottom of the map
+     */
     bottleHitGround() {
         return this.y > 350
     }
 
 
+    /**
+     * 
+     * @returns the requirements to throw the bottles to the right
+     */
     otherDirectionFalse() {
         return !this.bottleHit && !this.walkLeft
     }
@@ -101,6 +116,10 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    
+    /**
+     * this function runs the animations
+     */
     animate() {
         setInterval(() => {
             if (this.bottleHit) {

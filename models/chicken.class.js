@@ -13,6 +13,7 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
     ]
 
+    
     IMAGES_DEAD = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ]
@@ -36,6 +37,9 @@ class Chicken extends MovableObject {
     }
 
 
+     /**
+     * This function runs the animations
+     */
     animate() {
         setInterval(() => this.moveLeft(), 1000 / 60);
 
@@ -53,16 +57,26 @@ class Chicken extends MovableObject {
     }
 
 
+    /**
+     * 
+     * @returns the dead function from MovableObject class
+     */
     chickenDead() {
         return this.isDead()
     }
 
 
+    /**
+     * This function load the images for the dead chicken
+     */
     showDeadChickenImg() {
         this.loadImage(this.IMAGES_DEAD);
     }
 
 
+    /**
+     * This function controls the sound and prevented the repeating
+     */
     controlDeadSoud() {
         this.playSound();
         this.deadSoundPlayed = true;
@@ -85,6 +99,9 @@ class Chicken extends MovableObject {
     }
 
 
+    /**
+     * This function starts the sound and the time from which section the sound should be played
+     */
     playSound() {
         if (!isMuted) {
             this.dead_chicken_sound.currentTime = 0.5;

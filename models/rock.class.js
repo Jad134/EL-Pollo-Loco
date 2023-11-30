@@ -7,4 +7,8 @@ class Rock extends DrawableObject{
         this.height = 300;
         this.width = 300;
     }
+
+    /**
+     * This class is only used to indicate the end of the map
+     */
 }

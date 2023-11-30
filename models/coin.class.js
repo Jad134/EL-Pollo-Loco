@@ -8,6 +8,7 @@ class Coin extends MovableObject {
         'img/8_coin/coin_2.png'
     ]
 
+    
     constructor() {
         super().loadImage('img/8_coin/coin_1.png');
         this.x = 400 + Math.random() * 4300;
@@ -17,6 +18,9 @@ class Coin extends MovableObject {
     }
 
 
+     /**
+     * This function runs the animations
+     */
     animate() {
         setInterval(() => this.playAnimation(this.IMAGES_WALKING), 700);
     }

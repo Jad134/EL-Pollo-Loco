@@ -34,6 +34,9 @@ function mainMenu() {
 }
 
 
+/**
+ * This function starts the game and load all important things
+ */
 async function startGame() {
     level1 = [];
     clearAllIntervals()
@@ -195,6 +198,9 @@ function clearAllIntervals() {
 }
 
 
+/**
+ * This function is for the fullscreenmode responsible
+ */
 function fullScreen() {
     let gameContainer = document.getElementById('game-container');
     let canvas = document.getElementById('canvas');
@@ -217,6 +223,12 @@ function fullScreen() {
 }
 
 
+/**
+ * Enters fullscreen mode for the specified HTML element.
+ * 
+ * @param {HTMLElement} element - The HTML element for which fullscreen mode should be entered.
+ * 
+ */
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -228,6 +240,9 @@ function enterFullscreen(element) {
 }
 
 
+/**
+ * This function close the fullscreen
+ */
 function exitFullscreen() {
     if(document.exitFullscreen) {
       document.exitFullscreen();

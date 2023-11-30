@@ -35,6 +35,9 @@ class SmallChicken extends MovableObject {
     }
 
 
+    /**
+     * This function runs the animations
+     */
     animate() {
         setInterval(() => this.moveLeft(), 1000 / 60);
 
@@ -42,6 +45,9 @@ class SmallChicken extends MovableObject {
     }
 
 
+    /**
+     * This function let the small chicken walk left
+     */
     moveLeft() {
         if (!gamePaused) {
             super.moveLeft();

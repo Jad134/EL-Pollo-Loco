@@ -89,29 +89,44 @@ class Endboss extends MovableObject {
     }
 
 
+    /**
+     * This function checks whether the  endboss can start running
+     */
     canEndbossMoveLeft() {
         if (this.reachedBoss && !gamePaused)
             this.moveLeft();
     }
 
 
+    /**
+     * This function starts the walking animation
+     */
     startWalkAnimation() {
         if (this.reachedBoss && !gamePaused)
             this.playAnimation(this.IMAGES_WALKING)
     }
 
 
+    /**
+     * This function makes the endboss stand until the character is near him 
+     */
     letChickenStay() {
         if (!this.reachedBoss)
             this.playAnimation(this.IMAGES_STAY)
     }
 
 
+    /**
+     * if the character is near to the endboss, the variable is true. This function is started at world.js
+     */
     CharacterReachedBoss() {
         this.reachedBoss = true;
     }
 
 
+    /**
+     * This function runs the animations
+     */
     animate() {
         setInterval(() => {
             this.animations()
@@ -119,6 +134,9 @@ class Endboss extends MovableObject {
     }
 
 
+    /**
+     * This function controls which animation is needed
+     */
     animations() {
         if (this.isDead())
             this.showDeadChicken();
@@ -136,7 +154,7 @@ class Endboss extends MovableObject {
 
 
     /**
-     * The following four functions are responsible for the respective animations
+     * This function shows the dead endboss and contains the settings for the dead endboss
      */
     showDeadChicken() {
         this.speed = 0;
@@ -148,28 +166,41 @@ class Endboss extends MovableObject {
     }
 
 
+    /**
+     * This function is for the chicken attack animation
+     */
     chickenAttacks() {
-        this.speed = 50;
+        this.speed = 70;
         this.playAnimation(this.IMAGES_ATTACK)
         this.moveLeft();
     }
 
 
+    /**
+     * This function is for the walking animation and the walking right settings
+     */
     chickenMoveRight() {
-        this.speed = 40;
+        this.speed = 50;
         this.playAnimation(this.IMAGES_WALKING)
         this.otherDirection = true;
         this.moveRight();
     }
 
+
+    /**
+     * This function is for the walking animation and the walking left settings
+     */
     chickenMoveLeft() {
-        this.speed = 40;
+        this.speed = 55;
         this.playAnimation(this.IMAGES_WALKING)
         this.otherDirection = false;
         this.moveLeft();
     }
 
 
+    /**
+     * This function plays the sound from the endboss
+     */
     playEndbossSound() {
         setTimeout(() => {
             if (this.allowChickenSound()) {
@@ -181,6 +212,10 @@ class Endboss extends MovableObject {
     }
 
 
+    /**
+     * 
+     * @returns the requirements for the endboss sound
+     */
     allowChickenSound() {
         return !this.bigChickenSoundPlayed && !isMuted && !gamePaused && this.reachedBoss
     }

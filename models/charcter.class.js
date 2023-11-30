@@ -96,6 +96,9 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * this function runs the animations
+     */
     animate() {
         this.walkIntervallFunction()
         setInterval(() => this.characterAnimations(), 150);
@@ -123,6 +126,7 @@ class Character extends MovableObject {
         }
     }
 
+
 /**
  * starts the dead animation and starts the function for the end screen.
  */
@@ -133,22 +137,35 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * This function controled the sound and prevented repeating
+     */
     hurtSoundControl() {
         return !this.hurtSoundPlayed && !isMuted
     }
 
 
+    /**
+     * This function plays the sound
+     */
     playHurtSound() {
         this.hurt_sound.play();
         this.hurtSoundPlayed = true;
     }
 
 
+    /**
+     * This function sets the walk intervall to 60 fps
+     */
     walkIntervallFunction() {
         this.walkIntervall = setInterval(() => this.characterMove(), 1000 / 60);
     }
 
 
+    /**
+     * 
+     * @returns the requirement for character control
+     */
     isCharacterWalking() {
         return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
     }
@@ -173,11 +190,18 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * 
+     * @returns the requirement for character walks right and cant walk out of map
+     */
     canMoveRight() {
         return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !gamePaused;
     }
 
 
+    /**
+     * Character moves right and set the other dircetion to false for the character reflection
+     */
     moveRight() {
         super.moveRight();
         this.otherDirection = false;
@@ -187,11 +211,18 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * 
+     * @returns the requirement for the characters walk
+     */
     canMoveLeft() {
         return this.world.keyboard.LEFT && this.x > 0 && !gamePaused;
     }
 
 
+    /**
+     * let the character move left and set otherDirection to true for the character reflection
+     */
     moveLeft() {
         super.moveLeft();
         this.otherDirection = true;
@@ -201,24 +232,39 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * 
+     * @returns the requirement for the jump
+     */
     canJump() {
         return this.world.keyboard.UP && !this.isAboveGround() && !gamePaused || this.world.keyboard.SPACE && !this.isAboveGround() && !gamePaused
     }
 
 
+    /**
+     * 
+     * @returns the requirement for the camera
+     */
     controlRightCamera() {
         return this.world.keyboard.RIGHT && !gamePaused
     }
 
 
+    /**
+     * This function is for the camera move. If the character moves right, the camera slide right
+     */
     moveCameraRight() {
         this.world.camera_x += (-this.x + 100 - this.world.camera_x) * this.cameraSmoothness;
     }
 
 
+    /**
+     * This function is for the camera move. If the character moves left, the camera slide left
+     */
     controlLeftCamera() {
         return this.world.keyboard.LEFT && !gamePaused
     }
+
 
 /**
  * This function is for the camera movement while walking
@@ -228,11 +274,4 @@ class Character extends MovableObject {
     moveCameraLeft(targetCameraPosition) {
         this.world.camera_x += (targetCameraPosition - this.world.camera_x) * this.cameraSmoothness;
     }
-
-
-
-
-
-
-
 }

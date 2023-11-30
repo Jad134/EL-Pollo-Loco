@@ -20,6 +20,10 @@ class CollectBottles extends MovableObject{
     }
 
 
+    
+     /**
+     * This function runs the animations
+     */
     animate() {
         setInterval(() => this.playAnimation(this.IMAGES_BOTTLED), 700);
     }
