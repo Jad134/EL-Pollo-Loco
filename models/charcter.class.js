@@ -175,7 +175,6 @@ class Character extends MovableObject {
      * This function looks at what movement the character should make
      */
     characterMove() {
-        let targetCameraPosition = -this.x + 500;
         this.walking_sound.pause();
         if (this.canMoveRight())
             this.moveRight();
@@ -183,10 +182,7 @@ class Character extends MovableObject {
             this.moveLeft();
         if (this.canJump())
             this.jump();
-        if (this.controlRightCamera())
-            this.moveCameraRight();
-        if (this.controlLeftCamera())
-            this.moveCameraLeft(targetCameraPosition);
+            this.world.camera_x = -this.x + 100;
     }
 
 
@@ -248,30 +244,5 @@ class Character extends MovableObject {
     controlRightCamera() {
         return this.world.keyboard.RIGHT && !gamePaused
     }
-
-
-    /**
-     * This function is for the camera move. If the character moves right, the camera slide right
-     */
-    moveCameraRight() {
-        this.world.camera_x += (-this.x + 100 - this.world.camera_x) * this.cameraSmoothness;
-    }
-
-
-    /**
-     * This function is for the camera move. If the character moves left, the camera slide left
-     */
-    controlLeftCamera() {
-        return this.world.keyboard.LEFT && !gamePaused
-    }
-
-
-/**
- * This function is for the camera movement while walking
- * 
- * @param {number} targetCameraPosition 
- */
-    moveCameraLeft(targetCameraPosition) {
-        this.world.camera_x += (targetCameraPosition - this.world.camera_x) * this.cameraSmoothness;
-    }
+ 
 }

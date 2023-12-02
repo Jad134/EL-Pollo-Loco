@@ -259,7 +259,7 @@ function exitFullscreen() {
 function controlDeviceScreen() {
     var turnDeviceScreen = document.getElementById('turn-device-screen');
     var style = window.getComputedStyle(turnDeviceScreen);
-    setInterval(() => setGamePausedifSmallScreen(style), 1000);
+    setGamePausedifSmallScreen(style)
 }
 
 
@@ -273,6 +273,14 @@ function setGamePausedifSmallScreen(style) {
         gamePaused = false
     }
 }
+
+
+/**
+ * This Eventlistener controls, if the screensize is changing.This means that the function can be carried out without having to use an interval. This prevents a bug with the pause variable
+ */
+window.addEventListener('resize', function () {
+    controlDeviceScreen();
+});
 
 
 
