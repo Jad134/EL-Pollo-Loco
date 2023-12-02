@@ -13,6 +13,7 @@ async function init() {
     await removeStartScreen();
     touchButtonEvents();
     playSong();
+    controlDeviceScreen();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }
@@ -143,7 +144,7 @@ function pauseGame() {
     settings.style = 'display: none;'
     gamePaused = true;
     main_song.pause();
-    
+
 }
 
 
@@ -180,13 +181,13 @@ function showKeyboardAssignments() {
  */
 function closeAssignments() {
     let assignmentscreen = document.getElementById('assignment-screen');
-    let settings = document.getElementById('settings'); 
+    let settings = document.getElementById('settings');
     assignmentscreen.classList.remove('active');
     settings.style = 'display: flex;'
-    if(!startAtStartScreen){
+    if (!startAtStartScreen) {
         continueGame();
         document.getElementById('touch-panels').style = 'z-index: 99;'
-    }   
+    }
 }
 
 
@@ -206,12 +207,12 @@ function fullScreen() {
     let canvas = document.getElementById('canvas');
     let screenSizeInfo = document.getElementById('screen-size-info');
 
-    if(!isFullScreen) {
+    if (!isFullScreen) {
         canvas.style.width = '100%';
         canvas.style.height = '100%';
         screenSizeInfo.innerHTML = 'FullScreen'
         enterFullscreen(gameContainer);
-        
+
         isFullScreen = true;
     } else {
         canvas.style.width = '720px';
@@ -244,13 +245,35 @@ function enterFullscreen(element) {
  * This function close the fullscreen
  */
 function exitFullscreen() {
-    if(document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if(document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
     }
-  }
+}
 
 
-  
-  
+/**
+ * This function controls if the turn device screen is active
+ */
+function controlDeviceScreen() {
+    var turnDeviceScreen = document.getElementById('turn-device-screen');
+    var style = window.getComputedStyle(turnDeviceScreen);
+    setInterval(() => setGamePausedifSmallScreen(style), 1000);
+}
+
+
+/**
+ * This function stops the game, if the screensize is to small
+ */
+function setGamePausedifSmallScreen(style) {
+    if (style.getPropertyValue('display').includes('flex')) {
+        gamePaused = true
+    } else {
+        gamePaused = false
+    }
+}
+
+
+
+

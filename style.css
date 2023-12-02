@@ -264,7 +264,7 @@ canvas {
 }
 
 #touch-panels {
-    display: flex;
+    display: none;
     justify-content: space-between;
     width: 100%;
     position: absolute;
@@ -309,6 +309,19 @@ canvas {
     width: 40px;
     height: 40px;
 }
+
+#turn-device-screen{
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    backdrop-filter: blur(10px);
+}
+
 
 
 
@@ -363,6 +376,16 @@ canvas {
     }
 }
 
+@media (max-width: 430px){
+    #turn-device-screen{
+        display: flex;
+    }
+
+    #assignment-screen{
+        display: none;
+    }
+}
+
 @media (max-width: 340px) {
     h1 {
         font-size: 32px;
@@ -373,6 +396,12 @@ canvas {
     }
 }
 
+
+@media (max-height: 900px){
+    #touch-panels{
+        display: flex;
+    }
+}
 @media (max-height: 640px){
     h1 {
         display: none;
