@@ -5,7 +5,7 @@ class Character extends MovableObject {
     throwObjects = new ThrowableObject();
     endboss = new Endboss();
     drawableObjects = new DrawableObject();
-    cameraSmoothness = 0.1;
+
     hurtSoundPlayed;
     walkIntervall;
 
@@ -59,6 +59,19 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-10.png',
     ]
 
+    IMAGES_SLEEP = [
+        'img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'img/2_character_pepe/1_idle/long_idle/I-20.png',
+    ]
+
     world;
     walking_sound = new Audio('audio/walking.mp3');
     hurt_sound = new Audio('audio/hurt.mp3')
@@ -71,9 +84,9 @@ class Character extends MovableObject {
         bottom: 30,
     }
 
-/**
- * jsdoc construvotr
- */
+    /**
+     * jsdoc construvotr
+     */
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -81,6 +94,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_SLEEP);
         this.applyGravity();
         this.animate();
         this.resetSound();
@@ -105,10 +119,11 @@ class Character extends MovableObject {
     }
 
 
-/**
- * Control which animation is needed
- */
+    /**
+     * Control which animation is needed
+     */
     characterAnimations() {
+        let currentTime = new Date().getTime();
         if (this.isDead()) {
             this.playDeadAnimation();
         } else if (this.isHurt()) {
@@ -118,18 +133,20 @@ class Character extends MovableObject {
             }
         } else if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
-        } else {
+        } else if (this.isCharacterWalking()) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && (currentTime - this.world.keyboard.lastKeyboardPress) < 4000) {
             this.playAnimation(this.IMAGES_IDLE);
-            if (this.isCharacterWalking()) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
+        } else if ( (currentTime - this.world.keyboard.lastKeyboardPress) > 4000) {
+            this.playAnimation(this.IMAGES_SLEEP)
         }
+
     }
 
 
-/**
- * starts the dead animation and starts the function for the end screen.
- */
+    /**
+     * starts the dead animation and starts the function for the end screen.
+     */
     playDeadAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
         this.y += 10
@@ -182,7 +199,7 @@ class Character extends MovableObject {
             this.moveLeft();
         if (this.canJump())
             this.jump();
-            this.world.camera_x = -this.x + 100;
+        this.world.camera_x = -this.x + 100;
     }
 
 
@@ -244,5 +261,5 @@ class Character extends MovableObject {
     controlRightCamera() {
         return this.world.keyboard.RIGHT && !gamePaused
     }
- 
+
 }

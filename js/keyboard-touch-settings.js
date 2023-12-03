@@ -26,23 +26,29 @@ window.addEventListener('keyup', (e) => {
 
     if (e.keyCode == 39) {
         keyboard.RIGHT = false;
+        keyboard.lastKeyboardPress = new Date().getTime();
     }
     if (e.keyCode == 37) {
         keyboard.LEFT = false;
+        keyboard.lastKeyboardPress = new Date().getTime();
     }
     if (e.keyCode == 40) {
         keyboard.DOWN = false;
+        keyboard.lastKeyboardPress = new Date().getTime();
     }
     if (e.keyCode == 38) {
         keyboard.UP = false;
+        keyboard.lastKeyboardPress = new Date().getTime();
     }
 
     if (e.keyCode == 32) {
         keyboard.SPACE = false;
+        keyboard.lastKeyboardPress = new Date().getTime();
     }
 
     if (e.keyCode == 68) {
         keyboard.D = false;
+        keyboard.lastKeyboardPress = new Date().getTime();
     }
 
 });

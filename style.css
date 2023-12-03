@@ -397,17 +397,16 @@ canvas {
 }
 
 
-@media (max-height: 900px){
-    #touch-panels{
-        display: flex;
-    }
-}
 @media (max-height: 640px){
     h1 {
         display: none;
     }
     #assignment-screen{
         justify-content: center;
+    }
+
+    #touch-panels{
+        display: flex;
     }
 }
 
