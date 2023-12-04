@@ -135,15 +135,46 @@ class Character extends MovableObject {
             this.playAnimation(this.IMAGES_JUMPING);
         } else if (this.isCharacterWalking()) {
             this.playAnimation(this.IMAGES_WALKING);
-        } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && (currentTime - this.world.keyboard.lastKeyboardPress) < 4000) {
+        } else if (this.noKeyPressed() && this.isRecentKeyboardInput(currentTime)) {
             this.playAnimation(this.IMAGES_IDLE);
-        } else if ( (currentTime - this.world.keyboard.lastKeyboardPress) > 4000) {
+        } else if (this.isNotRecentKeyboardInput(currentTime)) {
             this.playAnimation(this.IMAGES_SLEEP)
         }
-
     }
 
 
+
+    /**
+     * Checks if the time difference between the current time and the last keyboard press
+     * is greater than 5000 milliseconds, indicating that there has not been recent keyboard input.
+     *
+     * @param {number} currentTime - The current time in milliseconds.
+     */
+    isNotRecentKeyboardInput(currentTime) {
+        return (currentTime - this.world.keyboard.lastKeyboardPress) > 5000
+    }
+
+
+    /**
+     *  Checks if the time difference between the current time and the last keyboard press
+     *  is less than 5000 milliseconds, indicating that there has been recent keyboard input
+     * 
+     * @param {number} currentTime 
+     */
+    isRecentKeyboardInput(currentTime) {
+        return (currentTime - this.world.keyboard.lastKeyboardPress) < 5000
+    }
+
+
+    /**
+     * 
+     * Checks if the keyboard is currently not pressed
+     */
+    noKeyPressed() {
+        return !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP
+    }
+
+    
     /**
      * starts the dead animation and starts the function for the end screen.
      */
